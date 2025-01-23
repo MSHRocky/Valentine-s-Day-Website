@@ -8,8 +8,8 @@
 </head>
 <body>
   <div class="container">
-    <h1>Will You Be My Valentine?</h1>
-    <p>You make every day special, but I want this Valentine’s Day to be unforgettable with you.</p>
+    <h1>Will You Be My Valentine Ma?</h1>
+    <p>Even though this year is different, I still want to spend Valentine's Day with you.</p>
     <button onclick="showMessage()">Yes!</button>
     <p id="response" class="hidden">Yay! I can’t wait to celebrate with you! ❤️</p>
   </div>
