@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Will You Be My Valentine?</h1>
+    <p>You make every day special, but I want this Valentine’s Day to be unforgettable with you.</p>
+    <button onclick="showMessage()">Yes!</button>
+    <p id="response" class="hidden">Yay! I can’t wait to celebrate with you! ❤️</p>
+  </div>
+  <script>
+    function showMessage() {
+      document.getElementById('response').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
+style.css
+css
+Copy
+Edit
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #ffe6e6;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 50px;
+  margin-top: 20%;
+}
+
+button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+button:hover {
+  background-color: #ff3333;
+}
+
+.hidden {
+  display: none;
+}
