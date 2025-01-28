@@ -12,21 +12,25 @@
       color: #333;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    
- .gif-container {
-    position: relative; /* Positioning for fine-tuning */
-    margin-top: 60px; /* Add space from the top */
-    text-align: center; /* Center horizontally */
-  }
 
-  .gif-container img {
-    max-width: 90%; /* Adjust GIF size */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 10px; /* Optional rounded edges */
-  }
+    .gif-container {
+      margin-bottom: 20px;
+    }
+
+    .gif-container img {
+      max-width: 90%;
+      height: auto;
+      border-radius: 10px;
+    }
+
     .container {
-      margin-top: 45%;
+      text-align: center;
     }
 
     h1 {
@@ -52,11 +56,12 @@
     button:hover {
       background-color: #ff3333;
     }
-     a {
+
+    a {
       text-decoration: none;
       color: inherit;
+    }
   </style>
-  
 </head>
 <body>
   <div class="gif-container">
