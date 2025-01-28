@@ -3,30 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yes!</title>
+  <title> No!</title>
   <style>
-    body {
+body {
       font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
+      text-align: center;
       background-color: #ffe6e6;
       color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .gif-container {
+      margin-bottom: 20px;
+    }
+
+    .gif-container img {
+      max-width: 90%;
+      height: auto;
+      border-radius: 10px;
     }
 
     .container {
       text-align: center;
-      background: white;
-      padding: 30px 50px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
       margin-bottom: 20px;
     }
 
@@ -43,7 +51,6 @@
       font-size: 18px;
       cursor: pointer;
       border-radius: 10px;
-      transition: background-color 0.3s ease;
     }
 
     button:hover {
@@ -57,19 +64,19 @@
   </style>
 </head>
 <body>
-   <audio id="yesSong" autoplay>
-    <source src="song.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-  <div class="container">
-    <h1>Yay! You said Yes!</h1>
-    <p>You just made this Valentine’s Day unforgettable. Thank you for being amazing!</p>
-    <a href="yes2.html" onclick="playSong()"><button>Next</button></a>
+  <div class="gif-container">
+    <img src="image2.gif" alt="Begging Cat">
   </div>
+  <div class="container">
+    <h1>Wow, I cant believe it, spending Valentine's Day with a Tamil Canadian Switzerland 1000/10 super model!!!</h1>
+    <p>My mom always told me to chase my dreams, so I started chasing you. I may not be the best photographer, but I can picture us together. I know your name's Suyani, but on February 14, I'm gonna call you mine. Peter Parker got bit by a spider and became Spiderman, so when are you going to bite me so I can become YourMan?</p>
+    <button onclick="nextPage('yes1.html')">Yes</button>
+    <button onclick="nextPage('no.html')">Sike, Im just joking</button>
+  </div>
+
   <script>
-    function playSong() {
-      const audio = document.getElementById('yesSong');
-      audio.play();
+    function nextPage(page) {
+      window.location.href = page;
     }
   </script>
 </body>
