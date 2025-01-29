@@ -74,10 +74,24 @@ body {
     <button onclick="nextPage('no2.html')">Still No</button>
   </div>
 
+ <!-- Audio element -->
+  <audio id="backgroundMusic" autoplay>
+    <source src="animal.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+
   <script>
     function nextPage(page) {
       window.location.href = page;
     }
+
+    // Ensure audio plays automatically when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      backgroundMusic.play().catch(error => {
+        console.log("Autoplay prevented. User interaction needed.", error);
+      });
+    });
   </script>
 </body>
 </html>
