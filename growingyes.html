@@ -27,6 +27,7 @@
       max-width: 90%;
       height: auto;
       border-radius: 10px;
+      transition: all 0.5s ease-in-out; /* Smooth transition when changing size */
     }
 
     .container {
@@ -104,6 +105,7 @@
     let buttonHeight = 48; // Starting height in pixels
     let buttonWidth = 80;
     let fontSize = 20; // Starting font size in pixels
+
     const imagePaths = [
       "pushpa.gif",
       "attack.gif",
@@ -113,25 +115,51 @@
       "meow.gif",
       "image7.gif"
     ];
-  
+
     noButton.addEventListener('click', function() {
       if (noClickCount < 5) {
         noClickCount++;
         imageDisplay.src = imagePaths[noClickCount];
-        buttonHeight += 45; // Increase height by 35px on each click
+
+        // Resize images dynamically based on which one is displayed
+        if (noClickCount === 2) { // If "slap.gif" is displayed
+          imageDisplay.style.width = "500px"; // Increase size
+          imageDisplay.style.height = "500px";
+        } else if (noClickCount === 3) { // If "kuromi.jpg" is displayed
+          imageDisplay.style.width = "250px"; // Reduce size
+          imageDisplay.style.height = "250px";
+        } else if (noClickCount === 4) { // If "broken.gif" is displayed
+          imageDisplay.style.width = "500px"; // Increase size
+          imageDisplay.style.height = "500px";
+        } else {
+          imageDisplay.style.width = ""; // Reset to default
+          imageDisplay.style.height = "";
+        }
+
+        buttonHeight += 45; // Increase height by 45px on each click
         buttonWidth += 45;
-        fontSize += 10; // Increase font size by 5px on each click
+        fontSize += 10; // Increase font size by 10px on each click
         yesButton.style.height = `${buttonHeight}px`; // Update button height
         yesButton.style.width = `${buttonWidth}px`;
         yesButton.style.fontSize = `${fontSize}px`; // Update font size
+
         if (noClickCount < 6) {
-          noButton.textContent = ["No", "Adiyae, don't press me", "Bitte nien, wunderschöner Schatz",  "But I'm the Batman to your Kuromi!", "You're breaking my heart, you're killing me", "Meow, this Akira, my Dada dead...meow"][noClickCount];
+          noButton.textContent = [
+            "No", 
+            "Adiyae, don't press me", 
+            "Bitte nien, wunderschöner Schatz",  
+            "But I'm the Batman to your Kuromi!", 
+            "You're breaking my heart, you're killing me", 
+            "Meow, this Akira, my Dada dead...meow"
+          ][noClickCount];
         }
       }
     });
   
     yesButton.addEventListener('click', () => {
       imageDisplay.src = 'image7.gif'; // Change to final image
+      imageDisplay.style.width = ""; // Reset size
+      imageDisplay.style.height = "";
       valentineQuestion.textContent = "YEA YEA!!! Theriyum Thaanae ;)"; // Change the question text
       responseButtons.style.display = 'none'; // Hide both buttons
       confetti(); // Trigger confetti animation
