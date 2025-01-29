@@ -58,11 +58,6 @@
       background-color: #ff3333;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
     .bounce2 {
       animation: bounce2 2s ease infinite;
     }
@@ -93,6 +88,12 @@
     </div>
   </div>
 
+  <!-- Add an <audio> element with an id -->
+  <audio id="backgroundMusic">
+    <source src="kgf.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+
   <script type="module">
     import confetti from 'https://cdn.skypack.dev/canvas-confetti';
     const yesButton = document.getElementById('yesButton');
@@ -100,11 +101,12 @@
     const imageDisplay = document.getElementById('imageDisplay');
     const valentineQuestion = document.getElementById('valentineQuestion');
     const responseButtons = document.getElementById('responseButtons');
-  
+    const backgroundMusic = document.getElementById('backgroundMusic'); // Get audio element
+
     let noClickCount = 0;
-    let buttonHeight = 48; // Starting height in pixels
+    let buttonHeight = 48;
     let buttonWidth = 80;
-    let fontSize = 20; // Starting font size in pixels
+    let fontSize = 20;
 
     const imagePaths = [
       "pushpa.gif",
@@ -121,27 +123,26 @@
         noClickCount++;
         imageDisplay.src = imagePaths[noClickCount];
 
-        // Resize images dynamically based on which one is displayed
-        if (noClickCount === 2) { // If "slap.gif" is displayed
-          imageDisplay.style.width = "500px"; // Increase size
+        if (noClickCount === 2) {
+          imageDisplay.style.width = "500px";
           imageDisplay.style.height = "500px";
-        } else if (noClickCount === 3) { // If "kuromi.jpg" is displayed
-          imageDisplay.style.width = "250px"; // Reduce size
+        } else if (noClickCount === 3) {
+          imageDisplay.style.width = "250px";
           imageDisplay.style.height = "250px";
-        } else if (noClickCount === 4) { // If "broken.gif" is displayed
-          imageDisplay.style.width = "500px"; // Increase size
+        } else if (noClickCount === 4) {
+          imageDisplay.style.width = "500px";
           imageDisplay.style.height = "500px";
         } else {
-          imageDisplay.style.width = ""; // Reset to default
+          imageDisplay.style.width = "";
           imageDisplay.style.height = "";
         }
 
-        buttonHeight += 45; // Increase height by 45px on each click
+        buttonHeight += 45;
         buttonWidth += 45;
-        fontSize += 10; // Increase font size by 10px on each click
-        yesButton.style.height = `${buttonHeight}px`; // Update button height
+        fontSize += 10;
+        yesButton.style.height = `${buttonHeight}px`;
         yesButton.style.width = `${buttonWidth}px`;
-        yesButton.style.fontSize = `${fontSize}px`; // Update font size
+        yesButton.style.fontSize = `${fontSize}px`;
 
         if (noClickCount < 6) {
           noButton.textContent = [
@@ -155,14 +156,17 @@
         }
       }
     });
-  
+
     yesButton.addEventListener('click', () => {
-      imageDisplay.src = 'pmass.gif'; // Change to final image
-      imageDisplay.style.width = ""; // Reset size
+      imageDisplay.src = 'pmass.gif';
+      imageDisplay.style.width = "";
       imageDisplay.style.height = "";
-      valentineQuestion.textContent = "YEA YEA!!! Theriyum Thaanae ;)"; // Change the question text
-      responseButtons.style.display = 'none'; // Hide both buttons
-      confetti(); // Trigger confetti animation
+      valentineQuestion.textContent = "YEA YEA!!! Theriyum Thaanae ;)";
+      responseButtons.style.display = 'none';
+      confetti();
+
+      // Play audio when Yes button is clicked
+      backgroundMusic.play().catch(error => console.log("Autoplay prevented: ", error));
     });
   </script>
 </body>
