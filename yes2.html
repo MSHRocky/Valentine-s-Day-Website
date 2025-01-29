@@ -1,11 +1,11 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> No!</title>
+  <title>No!</title>
   <style>
-body {
+    body {
       font-family: Arial, sans-serif;
       text-align: center;
       background-color: #ffe6e6;
@@ -57,26 +57,52 @@ body {
       background-color: #ff3333;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
+    /* Fullscreen YouTube Video */
+    #youtube-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      z-index: 9999;
+    }
+
+    #youtube-video {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
-  <div class="gif-container">
-    <img src="seeyou.gif" alt="Begging Cat">
+  <div id="main-content">
+    <div class="gif-container">
+      <img src="seeyou.gif" alt="Begging Cat">
+    </div>
+    <div class="container">
+      <h1>Still spending Valentine's Day with you <3 !!!</h1>
+      <p>It was worth a try sweetheart. All good, maybe another time. Still excited to take your cute ass out and spend Valentine's Day together.</p>
+      <button onclick="playYouTube()">I'm excited too!</button>
+    </div>
   </div>
-  <div class="container">
-    <h1>Still spending Valentine's Day with you <3 !!!</h1>
-    <p>It was worth a try sweetheart. All good, maybe another time. Still excited to take your cute ass out and spend Valentine's Day together. </p></p>
-    <button onclick="nextPage('yes3.html')">I'm excited too!</button>
-    
+
+  <!-- YouTube Video Container -->
+  <div id="youtube-container">
+    <iframe id="youtube-video" 
+            src="" 
+            frameborder="0" 
+            allow="autoplay; fullscreen" 
+            allowfullscreen>
+    </iframe>
   </div>
 
   <script>
-    function nextPage(page) {
-      window.location.href = page;
+    function playYouTube() {
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('youtube-container').style.display = 'block';
+      document.getElementById('youtube-video').src = "https://www.youtube.com/embed/A7tXr6GpAA8?autoplay=1";
     }
   </script>
 </body>
