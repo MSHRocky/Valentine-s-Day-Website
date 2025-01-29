@@ -71,13 +71,26 @@ body {
     <h1>Dance with me Suya chellam!</h1>
     <p>Honestly cannot wait to see how gorgeous you are, even though you're drop dead gorgeous everyday without even trying. Beyond lucky and blessed to know an angel like you exists on this Earth.</p></p>
     <button onclick="nextPage('yes1.html')">So, what now?</button>
-    
-  </div>
+      </div>
+
+ <!-- Audio element -->
+  <audio id="backgroundMusic" autoplay>
+    <source src="peelings.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
 
   <script>
     function nextPage(page) {
       window.location.href = page;
     }
+
+    // Ensure audio plays automatically when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      backgroundMusic.play().catch(error => {
+        console.log("Autoplay prevented. User interaction needed.", error);
+      });
+    });
   </script>
 </body>
 </html>
