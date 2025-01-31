@@ -88,27 +88,35 @@
     </div>
   </div>
   
- <!-- Audio element -->
-  <audio id="backgroundMusic" autoplay>
+  <!-- Audio element -->
+  <audio id="backgroundMusic">
     <source src="jd.mp3" type="audio/mpeg">
     Your browser does not support the audio tag.
   </audio>
 
   <script>
-    function nextPage(page) {
-      window.location.href = page;
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+      const backgroundMusic = document.getElementById("backgroundMusic");
 
-    // Ensure audio plays automatically when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      const backgroundMusic = document.getElementById('backgroundMusic');
-      backgroundMusic.play().catch(error => {
-        console.log("Autoplay prevented. User interaction needed.", error);
-      });
+      // Function to play audio after user interaction
+      function playAudio() {
+        backgroundMusic.play().catch(error => {
+          console.log("Autoplay prevented. Waiting for user interaction.", error);
+        });
+        document.removeEventListener("click", playAudio); // Remove event listener after first click
+      }
+
+      // Wait for the user to click anywhere, then play audio
+      document.addEventListener("click", playAudio);
     });
+
+    function playYouTube() {
+      document.getElementById("main-content").style.display = "none";
+      document.getElementById("youtube-container").style.display = "block";
+      document.getElementById("youtube-video").src = "https://www.youtube.com/embed/A7tXr6GpAA8?autoplay=1";
+    }
   </script>
-</body>
-</html>
+
   <!-- YouTube Video Container -->
   <div id="youtube-container">
     <iframe id="youtube-video" 
@@ -119,12 +127,5 @@
     </iframe>
   </div>
 
-  <script>
-    function playYouTube() {
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('youtube-container').style.display = 'block';
-      document.getElementById('youtube-video').src = "https://www.youtube.com/embed/A7tXr6GpAA8?autoplay=1";
-    }
-  </script>
 </body>
 </html>
