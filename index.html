@@ -67,35 +67,24 @@
     }
 
     /* Rose Petal Falling Animation */
-    .petal {
-      position: absolute;
-      width: 25px;
-      height: 25px;
-      background-image: url('rosepetals.png'); /* Replace with your petal image */
-      background-size: contain;
-      background-repeat: no-repeat;
-      opacity: 0.8;
-      animation: fall linear infinite;
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) translateX(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(50px) rotate(360deg);
+        opacity: 0;
+      }
     }
 
-  @keyframes fall {
-  0% {
-    transform: translateY(-100px) translateX(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) translateX(50px) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-.petal {
-  position: fixed;
-  top: -100px; /* Start above the screen */
-  width: 300px; /* Adjust petal size */
-  height: auto;
-  opacity: 0;
-  animation: fall linear infinite;
+    .petal {
+      position: fixed;
+      top: -100px;
+      width: 30px;
+      height: auto;
+      opacity: 0.8;
+      animation: fall linear infinite;
     }
   </style>
 </head>
@@ -110,31 +99,31 @@
     <button onclick="nextPage('no.html')">No</button>
   </div>
 
-<script>
-  function createPetal() {
-    const petal = document.createElement("img");
-    petal.src = "rosepetals.png"; // Update with your actual image file
-    petal.classList.add("petal");
+  <script>
+    function createPetal() {
+      const petal = document.createElement("img");
+      petal.src = "rosepetals.png"; // Ensure this image exists
+      petal.classList.add("petal");
 
-    // Randomize position, size, and animation duration
-    petal.style.left = Math.random() * window.innerWidth + "px";
-    petal.style.animationDuration = (Math.random() * 3 + 2) + "s"; // 2s to 5s fall time
-    petal.style.width = (Math.random() * 20 + 20) + "px"; // 20px to 40px size
+      // Randomize position, size, and animation duration
+      petal.style.left = Math.random() * window.innerWidth + "px";
+      petal.style.animationDuration = (Math.random() * 3 + 2) + "s"; // 2s to 5s fall time
+      petal.style.width = (Math.random() * 20 + 20) + "px"; // 20px to 40px size
 
-    document.body.appendChild(petal);
+      document.body.appendChild(petal);
 
-    // Remove petal after animation to avoid memory leaks
-    setTimeout(() => {
-      petal.remove();
-    }, 5000);
-  }
+      // Remove petal after animation to avoid memory leaks
+      setTimeout(() => {
+        petal.remove();
+      }, 5000);
+    }
 
-  // Create petals at random intervals
-  setInterval(createPetal, 300); // Every 300ms (adjust for more or fewer petals)
-</script>
+    // Create petals at random intervals
+    setInterval(createPetal, 300); // Every 300ms (adjust for more or fewer petals)
+  </script>
 
-  <!-- Audio eleement -->
-  <audio id="backgroundMusic" autoplay>
+  <!-- Audio element (will not autoplay until user clicks) -->
+  <audio id="backgroundMusic" loop>
     <source src="cherry.mp3" type="audio/mpeg">
     Your browser does not support the audio tag.
   </audio>
@@ -144,13 +133,13 @@
       window.location.href = page;
     }
 
-    // Ensure audio plays automatically when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      const backgroundMusic = document.getElementById('backgroundMusic');
+    // Ensuring audio plays only after user interaction
+    document.addEventListener("click", () => {
+      const backgroundMusic = document.getElementById("backgroundMusic");
       backgroundMusic.play().catch(error => {
-        console.log("Autoplay prevented. User interaction needed.", error);
+        console.log("Autoplay prevented. Waiting for user interaction.", error);
       });
-    });
+    }, { once: true }); // Runs only on the first click
   </script>
 </body>
 </html>
