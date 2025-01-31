@@ -106,6 +106,29 @@ body {
     <button onclick="nextPage('olol.html')">Eat my Olol</button>
   </div>
 
+<script>
+  function createPetal() {
+    const petal = document.createElement("img");
+    petal.src = "bullet.png"; // Update with your actual image file
+    petal.classList.add("petal");
+
+    // Randomize position, size, and animation duration
+    petal.style.left = Math.random() * window.innerWidth + "px";
+    petal.style.animationDuration = (Math.random() * 3 + 2) + "s"; // 2s to 5s fall time
+    petal.style.width = (Math.random() * 20 + 20) + "px"; // 20px to 40px size
+
+    document.body.appendChild(petal);
+
+    // Remove petal after animation to avoid memory leaks
+    setTimeout(() => {
+      petal.remove();
+    }, 5000);
+  }
+
+  // Create petals at random intervals
+  setInterval(createPetal, 300); // Every 300ms (adjust for more or fewer petals)
+  
+</script>
  <!-- Audio element -->
   <audio id="backgroundMusic" autoplay>
     <source src="massbgm.mp3" type="audio/mpeg">
