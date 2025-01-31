@@ -61,6 +61,37 @@ body {
       text-decoration: none;
       color: inherit;
     }
+        /* Rose Petal Falling Animation */
+    .petal {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background-image: url('bullet.png'); /* Replace with your petal image */
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+
+  @keyframes fall {
+  0% {
+    transform: translateY(-100px) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) translateX(50px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.petal {
+  position: fixed;
+  top: -100px; /* Start above the screen */
+  width: 300px; /* Adjust petal size */
+  height: auto;
+  opacity: 0;
+  animation: fall linear infinite;
+    }
   </style>
 </head>
 <body>
