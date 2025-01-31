@@ -78,15 +78,24 @@
       animation: fall linear infinite;
     }
 
-    @keyframes fall {
-      0% {
-        transform: translateY(-10vh) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
+  @keyframes fall {
+  0% {
+    transform: translateY(-100px) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) translateX(50px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.petal {
+  position: fixed;
+  top: -100px; /* Start above the screen */
+  width: 30px; /* Adjust petal size */
+  height: auto;
+  opacity: 0;
+  animation: fall linear infinite;
     }
   </style>
 </head>
@@ -101,30 +110,27 @@
     <button onclick="nextPage('no.html')">No</button>
   </div>
 
-  <script>
-    function nextPage(page) {
-      window.location.href = page;
-    }
+<script>
+  function createPetal() {
+    const petal = document.createElement("img");
+    petal.src = "rosepetal.png"; // Update with your actual image file
+    petal.classList.add("petal");
 
-    // Create Falling Petals
-    function createPetal() {
-      const petal = document.createElement("div");
-      petal.classList.add("petal");
-      document.body.appendChild(petal);
+    // Randomize position, size, and animation duration
+    petal.style.left = Math.random() * window.innerWidth + "px";
+    petal.style.animationDuration = (Math.random() * 3 + 2) + "s"; // 2s to 5s fall time
+    petal.style.width = (Math.random() * 20 + 20) + "px"; // 20px to 40px size
 
-      // Random Position & Delay
-      petal.style.left = Math.random() * window.innerWidth + "px";
-      petal.style.animationDuration = (Math.random() * 3 + 5) + "s"; // 5s to 8s
-      petal.style.animationDelay = Math.random() * 5 + "s";
+    document.body.appendChild(petal);
 
-      // Remove Petal After Falling
-      setTimeout(() => {
-        petal.remove();
-      }, 8000);
-    }
+    // Remove petal after animation to avoid memory leaks
+    setTimeout(() => {
+      petal.remove();
+    }, 5000);
+  }
 
-    // Generate Multiple Petals
-    setInterval(createPetal, 400);
-  </script>
+  // Create petals at random intervals
+  setInterval(createPetal, 300); // Every 300ms (adjust for more or fewer petals)
+</script>
 </body>
 </html>
