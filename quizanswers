@@ -1,0 +1,18 @@
+// Quiz Data
+const quiz = [
+  // Easy (multiple choice)
+  { q: "What is my favorite anime?", options:["Naruto","One Piece","Attack On Titan","Dragon Ball"], answer: "Dragon Ball", type: "mc" },
+  { q: "What is my greatest physical fear?", options:["Needles","Cucumbers","Shamini Aunty","Small Tight Places"], answer: "Needles", type: "mc" },
+  { q: "What is my favourite physical feature about you?", options:["Hips","Big Big BIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIG Bum Bum","Eyes","Feet"], answer: "Eyes", type: "mc" },
+  
+  // Medium (text input)
+  { q: "Where was I born?", answer: "United Kingdom", type: "text" },
+  { q: "What is my love language?", answer: "Phy7sical Touch", type: "text" },
+  { q: "What is my favourite movie?", answer: "The Water Horse", type: "text" },
+
+  // Hard (text input)
+  { q: "What is my type?", answer: "Me", type: "text" },
+  { q: "Who is my favourite English film actor?", answer: "Adam Sandler", type: "text" },
+  { q: "What are one of my dealbreakers in a relationship?", answer: "Disrespect", type: "text" },
+];
+
