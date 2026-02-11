@@ -6,6 +6,7 @@
 <title>Valentine Quiz 💖</title>
 
 <style>
+/* ----- Body & Background ----- */
 body {
   margin: 0;
   padding: 0;
@@ -14,11 +15,15 @@ body {
   color: white;
   text-align: center;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   position: relative;
 }
 
-/* Hearts (lives) top right */
+/* ----- Hearts / Lives ----- */
 #lives {
   position: fixed;
   top: 20px;
@@ -27,64 +32,111 @@ body {
   display: none;
 }
 
-/* Question container */
+/* ----- Container ----- */
 #question-container {
-  margin-top: 80px;
-}
-
-.question {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  text-shadow: 0 0 10px #fff;
-}
-
-.options {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  align-items: center;
+  gap: 20px;
+  width: 90%;
+  max-width: 700px;
+}
+
+/* ----- Question Text ----- */
+.question {
+  font-size: 2rem;
+  text-shadow: 0 0 10px #fff;
+  min-height: 60px;
+}
+
+/* ----- Options (Kahoot-style squares) ----- */
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  justify-items: center;
 }
 
 button.option-btn {
-  padding: 12px 24px;
+  width: 100%;
+  padding: 25px 20px;
   font-size: 18px;
-  border-radius: 12px;
+  border-radius: 15px;
   border: none;
-  background: linear-gradient(45deg, #ff758f, #ff4d6d);
+  background: linear-gradient(135deg, #ff758f, #ff4d6d);
   color: white;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 10px rgba(255,105,135,0.5);
 }
 
 button.option-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255,105,135,0.8);
+  box-shadow: 0 0 20px rgba(255,105,135,0.8);
 }
 
-/* Feedback text */
-#feedback {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  min-height: 40px;
-}
-
-/* Free answer input */
+/* ----- Free answer input ----- */
 input[type="text"] {
-  padding: 10px 15px;
+  padding: 12px 20px;
   font-size: 18px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: none;
   width: 60%;
+  text-align: center;
 }
 
 button.submit-btn {
-  margin-top: 20px;
+  margin-top: 15px;
   padding: 12px 24px;
   font-size: 18px;
   border-radius: 12px;
   border: none;
-  background: linear-gradient(45deg, #ff758f, #ff4d6d);
+  background: linear-gradient(135deg, #ff758f, #ff4d6d);
   color: white;
   cursor: pointer;
+}
+
+/* ----- Feedback Text ----- */
+#feedback {
+  font-size: 1.2rem;
+  min-height: 50px;
+  text-align: center;
+}
+
+/* ----- Shake animation for wrong answer ----- */
+@keyframes shake {
+  0% { transform: translate(0px); }
+  25% { transform: translate(-10px); }
+  50% { transform: translate(10px); }
+  75% { transform: translate(-10px); }
+  100% { transform: translate(0px); }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+/* ----- Typing animation for feedback ----- */
+.typing {
+  border-right: 2px solid white;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* ----- Sparkle / Background effect ----- */
+.sparkle {
+  position: absolute;
+  font-size: 16px;
+  animation: floatSparkle 4s ease-in-out infinite;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+@keyframes floatSparkle {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-150px) translateX(30px); opacity: 0; }
 }
 </style>
 </head>
@@ -99,19 +151,19 @@ button.submit-btn {
 </div>
 
 <script>
-// Quiz Data
+// ----- Quiz Data -----
 const quiz = [
-  // Easy (multiple choice)
+  // Easy MC
   { q: "What is my favorite color?", options:["Red","Blue","Pink","Green"], answer: "Pink", type: "mc" },
   { q: "What is my favorite dessert?", options:["Cake","Ice Cream","Brownies","Pie"], answer: "Ice Cream", type: "mc" },
   { q: "Which movie do I love most?", options:["Titanic","Inception","The Notebook","Avatar"], answer: "The Notebook", type: "mc" },
-  
-  // Medium (text input)
+
+  // Medium (text)
   { q: "What's my dream vacation spot?", answer: "Maldives", type: "text" },
   { q: "What's my favorite animal?", answer: "Cat", type: "text" },
   { q: "What is my hobby?", answer: "Gaming", type: "text" },
 
-  // Hard (text input)
+  // Hard (text)
   { q: "Name my favorite flower.", answer: "Rose", type: "text" },
   { q: "What’s my favorite song?", answer: "Everything is F*cked", type: "text" },
   { q: "What’s my favorite number?", answer: "7", type: "text" }
@@ -121,8 +173,8 @@ let currentQuestion = 0;
 let lives = 3;
 let heartsVisible = false;
 
-// Show question
-function showQuestion() {
+// ----- Show Question -----
+function showQuestion(){
   const q = quiz[currentQuestion];
   const questionEl = document.getElementById("question");
   const optionsEl = document.getElementById("options");
@@ -134,7 +186,6 @@ function showQuestion() {
   questionEl.textContent = q.q;
 
   if(q.type === "mc"){
-    // Only Easy Questions
     q.options.forEach(opt=>{
       const btn = document.createElement("button");
       btn.textContent = opt;
@@ -155,38 +206,70 @@ function showQuestion() {
   }
 }
 
-// Check answer
+// ----- Typing Feedback -----
+function typeFeedback(text){
+  const feedbackEl = document.getElementById("feedback");
+  feedbackEl.innerHTML = "";
+  let i = 0;
+  function typeChar(){
+    if(i < text.length){
+      feedbackEl.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeChar, 35);
+    }
+  }
+  typeChar();
+}
+
+// ----- Check Answer -----
 function checkAnswer(ans){
   const q = quiz[currentQuestion];
-  const feedbackEl = document.getElementById("feedback");
 
   if(ans.trim().toLowerCase() === q.answer.toLowerCase()){
     currentQuestion++;
     if(currentQuestion < quiz.length){
       showQuestion();
     } else {
-      // After 9 questions, go to bonus
-      window.location.href = "bonus.html";
+      window.location.href = "bonus.html"; // after 9 questions
     }
   } else {
-    // Wrong answer feedback
+    // Wrong answer shake
+    const container = document.getElementById("question-container");
+    container.classList.add("shake");
+    setTimeout(()=> container.classList.remove("shake"), 500);
+
+    // Show lives
     if(!heartsVisible){
       document.getElementById("lives").style.display = "block";
       heartsVisible = true;
     }
+
     lives--;
     document.getElementById("lives").textContent = "❤️".repeat(lives);
-    feedbackEl.textContent = `It's ok love, we all make mistakes sometimes. Even angels like you deserve another chance. Hearts left: ${lives}`;
-    
+
+    typeFeedback(`It's ok love, we all make mistakes sometimes. Even angels like you deserve another chance. Hearts left: ${lives}`);
+
     if(lives === 0){
       window.location.href = "fail.html";
     }
   }
 }
 
-// Start quiz
-showQuestion();
+// ----- Sparkles -----
+const sparkleEmojis = ["✨","💫","💖"];
+function createSparkle(){
+  const sparkle = document.createElement("div");
+  sparkle.className = "sparkle";
+  sparkle.style.left = Math.random()*window.innerWidth+"px";
+  sparkle.style.top = Math.random()*window.innerHeight+"px";
+  sparkle.style.fontSize = (15+Math.random()*15)+"px";
+  sparkle.innerText = sparkleEmojis[Math.floor(Math.random()*sparkleEmojis.length)];
+  document.body.appendChild(sparkle);
+  setTimeout(()=> sparkle.remove(), 4000);
+}
+setInterval(createSparkle, 400);
 
+showQuestion();
 </script>
 </body>
 </html>
