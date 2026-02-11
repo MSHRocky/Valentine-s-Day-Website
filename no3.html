@@ -6,7 +6,6 @@
 <title>Oh No 💔</title>
 
 <style>
-/* Body styling */
 body {
   margin: 0;
   padding: 0;
@@ -16,14 +15,14 @@ body {
   justify-content: center;
   align-items: center;
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #0d1b2a, #1b263b); /* dark stormy blue */
+  background: linear-gradient(to bottom, #0d1b2a, #1b263b); /* stormy blue */
   color: white;
   text-align: center;
   overflow: hidden;
   position: relative;
 }
 
-/* Cloud overlay */
+/* Clouds */
 .clouds {
   position: absolute;
   width: 200%;
@@ -54,10 +53,18 @@ body {
   100% { transform: translateY(100vh); opacity: 0; }
 }
 
-/* Optional lightning flash */
-@keyframes flash {
-  0%, 100% { background-color: transparent; }
-  50% { background-color: rgba(255,255,255,0.1); }
+/* Sad emojis */
+.sad-emoji {
+  position: absolute;
+  font-size: 24px;
+  animation: floatEmoji 6s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes floatEmoji {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-200px) translateX(30px); opacity: 0; }
 }
 
 /* Typing text */
@@ -127,6 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "You don't want to be my Valentine?"
   ];
 
+  // Typing animation
   let line = 0;
   let charIndex = 0;
 
@@ -149,28 +157,39 @@ document.addEventListener("DOMContentLoaded", function() {
 
   setTimeout(typeWriterLine, 800);
 
-  // Create more visible raindrops
+  // Raindrops
   function createRain() {
     const rainDrop = document.createElement("div");
     rainDrop.className = "rain";
     rainDrop.style.left = Math.random() * window.innerWidth + "px";
-    rainDrop.style.height = (Math.random() * 20 + 15) + "px"; // longer rain
+    rainDrop.style.height = (Math.random() * 20 + 15) + "px";
     rainDrop.style.animationDuration = (Math.random() * 0.5 + 0.7) + "s";
     document.body.appendChild(rainDrop);
     setTimeout(() => rainDrop.remove(), 1000);
   }
 
-  setInterval(createRain, 5); // lots of raindrops
+  setInterval(createRain, 5);
 
-  // Optional: subtle lightning flashes
+  // Sad floating emojis
+  const sadEmojis = ["😢", "💔", "😞", "😭"];
+  function createEmoji() {
+    const emoji = document.createElement("div");
+    emoji.className = "sad-emoji";
+    emoji.style.left = Math.random() * window.innerWidth + "px";
+    emoji.style.fontSize = (20 + Math.random()*15) + "px";
+    emoji.innerText = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+    document.body.appendChild(emoji);
+    setTimeout(() => emoji.remove(), 6000);
+  }
+
+  setInterval(createEmoji, 700);
+
+  // Optional subtle lightning flash
   function lightning() {
     document.body.style.backgroundColor = "rgba(255,255,255,0.05)";
-    setTimeout(() => {
-      document.body.style.backgroundColor = "";
-    }, 100);
+    setTimeout(() => { document.body.style.backgroundColor = ""; }, 100);
   }
-  setInterval(lightning, 4000 + Math.random()*2000); // random flashes
-
+  setInterval(lightning, 4000 + Math.random()*2000);
 });
 </script>
 
