@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,19 +8,17 @@
 <style>
 body {
   margin: 0;
-  padding: 0;
   height: 100vh;
-  overflow: hidden;
+  font-family: Georgia, serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Georgia', serif;
   background: black;
   color: white;
-  transition: background 3s ease, color 3s ease;
+  overflow: hidden;
+  transition: background 2s ease, color 2s ease;
 }
 
-/* Romantic background after fade */
 .romantic {
   background: linear-gradient(135deg, #ff9a9e, #fad0c4, #ffd1ff);
   color: #4a1c2b;
@@ -28,75 +26,59 @@ body {
 
 .content {
   text-align: center;
-  max-width: 750px;
+  max-width: 700px;
   padding: 20px;
-  z-index: 2;
 }
 
 h1 {
   font-size: 3rem;
-  margin-bottom: 20px;
 }
 
 p {
-  font-size: 1.5rem;
-  min-height: 80px;
+  font-size: 1.4rem;
+  min-height: 60px;
 }
 
-/* Floating hearts */
-.heart {
-  position: absolute;
-  bottom: -50px;
-  animation: floatUp linear infinite;
-  opacity: 0.7;
-  pointer-events: none;
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateY(-110vh) scale(1.5);
-    opacity: 0;
-  }
-}
-
-/* Buttons */
 .button-container {
   position: absolute;
   bottom: 25%;
   display: flex;
   gap: 40px;
   opacity: 0;
-  transition: opacity 1.5s ease;
+  transition: opacity 1s ease;
 }
 
-.show-buttons {
+.show {
   opacity: 1;
 }
 
 .love-btn {
-  background-color: #ff4d8d;
+  background: #ff4d8d;
   color: white;
   border: none;
-  padding: 16px 40px;
+  padding: 15px 40px;
   font-size: 20px;
   border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+  transition: 0.2s;
 }
 
 .love-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 25px rgba(255, 105, 180, 0.9);
 }
 
-/* Moving No button */
-#noBtn {
-  position: relative;
+.heart {
+  position: absolute;
+  bottom: -40px;
+  animation: floatUp linear infinite;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
 }
 </style>
 </head>
@@ -105,32 +87,35 @@ p {
 
 <div class="content">
   <h1 id="title"></h1>
-  <p id="message"></p>
+  <p id="text"></p>
 </div>
 
-<div class="button-container" id="buttonContainer">
+<div class="button-container" id="buttons">
   <button class="love-btn" onclick="window.location.href='yes3.html'">Yes</button>
   <button class="love-btn" id="noBtn">No</button>
 </div>
 
 <script>
-const titleEl = document.getElementById("title");
-const messageEl = document.getElementById("message");
-const buttonContainer = document.getElementById("buttonContainer");
+const title = document.getElementById("title");
+const text = document.getElementById("text");
+const buttons = document.getElementById("buttons");
 const noBtn = document.getElementById("noBtn");
 
-const titleText = "Hey Beautiful ❤️";
-const introText = "There’s something I’ve been wanting to ask you...";
-const questionText = "I have wanted to ask you this since last year...";
-const questionText = "Will you be my Valentine this year again? 💌";
+const titleText = "Hey Pretty Princess ❤️";]
+const questionText = "I wanted to ask you this since last year...";
+const questionText = "Will you be my Valentine this year too? 💌";
 
-/* Typing effect */
-function typeText(element, text, speed, callback) {
+/* Fade background safely */
+setTimeout(() => {
+  document.body.classList.add("romantic");
+}, 500);
+
+/* Simple typing effect */
+function typeWriter(element, message, speed, callback) {
   let i = 0;
-  element.innerHTML = "";
   function type() {
-    if (i < text.length) {
-      element.innerHTML += text.charAt(i);
+    if (i < message.length) {
+      element.innerHTML += message.charAt(i);
       i++;
       setTimeout(type, speed);
     } else if (callback) {
@@ -140,63 +125,38 @@ function typeText(element, text, speed, callback) {
   type();
 }
 
+/* Start sequence */
+setTimeout(() => {
+  typeWriter(title, titleText, 60, () => {
+    setTimeout(() => {
+      typeWriter(text, questionText, 60, () => {
+        setTimeout(() => {
+          buttons.classList.add("show");
+        }, 800);
+      });
+    }, 800);
+  });
+}, 1000);
+
 /* Floating hearts */
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
-  heart.innerHTML = ["💖","💕","💗","💓","💞"][Math.floor(Math.random()*5)];
+  heart.innerHTML = ["💖","💕","💗","💓"][Math.floor(Math.random()*4)];
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (4 + Math.random()*4) + "s";
-  heart.style.fontSize = (15 + Math.random()*25) + "px";
+  heart.style.animationDuration = (4 + Math.random()*3) + "s";
+  heart.style.fontSize = (15 + Math.random()*20) + "px";
   document.body.appendChild(heart);
-
-  setTimeout(() => heart.remove(), 8000);
+  setTimeout(() => heart.remove(), 7000);
 }
 
-function startHearts() {
-  setInterval(createHeart, 400);
-}
+setInterval(createHeart, 500);
 
 /* Make No button run away */
-noBtn.addEventListener("mouseover", function() {
-  const x = Math.floor(Math.random() * 200) - 100;
-  const y = Math.floor(Math.random() * 200) - 100;
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 200 - 100;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
-});
-
-/* Start sequence */
-window.addEventListener("load", () => {
-
-  // Fade from black after 1s
-  setTimeout(() => {
-    document.body.classList.add("romantic");
-    startHearts();
-  }, 1000);
-
-  // Start typing after fade begins
-  setTimeout(() => {
-    typeText(titleEl, titleText, 60, () => {
-      setTimeout(() => {
-        typeText(messageEl, introText, 40, () => {
-
-          // Dramatic pause
-          setTimeout(() => {
-            messageEl.innerHTML += "<br><br>";
-            typeText(messageEl, questionText, 50, () => {
-
-              // Show buttons
-              setTimeout(() => {
-                buttonContainer.classList.add("show-buttons");
-              }, 500);
-
-            });
-          }, 1500);
-
-        });
-      }, 500);
-    });
-  }, 2000);
-
 });
 </script>
 
