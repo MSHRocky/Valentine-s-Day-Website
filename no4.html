@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>No Choice 😏</title>
 
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #330000, #800000, #990000); /* dark evil red */
+}
+
+/* Typing text */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  min-height: 200px; /* reserve space for all lines */
+  line-height: 1.5;
+  z-index: 2;
+  position: relative;
+}
+
+/* Button */
+button {
+  padding: 16px 40px;
+  font-size: 22px;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #ff758f, #ff4d6d);
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+}
+
+button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255,255,255,0.8);
+}
+
+/* Floating fire emojis */
+.fire-emoji {
+  position: absolute;
+  font-size: 24px;
+  animation: floatFire 4s linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes floatFire {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-150px) translateX(20px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="typingText"></h1>
+
+<button id="clickButton" onclick="alert('You clicked me! 😏')">Click Me</button>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const textElement = document.getElementById("typingText");
+  const button = document.getElementById("clickButton");
+  
+  const lines = [
+    "Why do you love rejecting me?",
+    "Well guess what...",
+    "I already made the decision that you are my Valentine",
+    "You got no other option sweetheart 😉"
+  ];
+  
+  let line = 0;
+  let charIndex = 0;
+
+  // Typing animation
+  function typeLine() {
+    if (charIndex < lines[line].length) {
+      textElement.innerHTML += lines[line].charAt(charIndex);
+      charIndex++;
+      setTimeout(typeLine, 50);
+    } else {
+      line++;
+      if (line < lines.length) {
+        textElement.innerHTML += "<br>";
+        charIndex = 0;
+        setTimeout(typeLine, 500); // pause between lines
+      } else {
+        button.style.opacity = 1; // show button after all lines
+      }
+    }
+  }
+
+  setTimeout(typeLine, 800);
+
+  // Floating fire emojis
+  const fireEmojis = ["🔥", "🔥", "🔥", "💥"];
+  function createFire() {
+    const fire = document.createElement("div");
+    fire.className = "fire-emoji";
+    fire.style.left = Math.random() * window.innerWidth + "px";
+    fire.style.fontSize = (20 + Math.random()*20) + "px";
+    fire.innerText = fireEmojis[Math.floor(Math.random() * fireEmojis.length)];
+    document.body.appendChild(fire);
+    setTimeout(() => fire.remove(), 4000);
+  }
+
+  setInterval(createFire, 400); // spawn fire often
+});
+</script>
+
+</body>
+</html>
