@@ -21,7 +21,7 @@ body {
   transition: background 3s ease;
 }
 
-/* Fade to pinkish red gradient */
+/* Romantic fade background */
 body.fade-in {
   background: linear-gradient(135deg, #ff758f, #ff4d6d, #ff2e63);
 }
@@ -29,15 +29,11 @@ body.fade-in {
 h1 {
   font-size: 2.8rem;
   margin-bottom: 40px;
-  opacity: 0;
-  transition: opacity 2s ease;
+  min-height: 80px;
+  text-align: center;
 }
 
-.show-text {
-  opacity: 1;
-}
-
-/* Button container */
+/* Buttons */
 .button-container {
   display: flex;
   gap: 50px;
@@ -49,7 +45,6 @@ h1 {
   opacity: 1;
 }
 
-/* Buttons */
 button {
   padding: 15px 40px;
   font-size: 22px;
@@ -62,7 +57,6 @@ button {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover effect */
 button:hover {
   transform: scale(1.1);
   box-shadow: 0 0 20px rgba(255,255,255,0.8);
@@ -72,7 +66,7 @@ button:hover {
 
 <body>
 
-<h1 id="question">Will you be my Valentine? ❤️</h1>
+<h1 id="typingText"></h1>
 
 <div class="button-container" id="buttons">
   <button onclick="window.location.href='yes3.html'">Yes</button>
@@ -82,20 +76,35 @@ button:hover {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
+  const textElement = document.getElementById("typingText");
+  const message = "Will you be my Valentine? ❤️";
+
   // Fade in background
   setTimeout(() => {
     document.body.classList.add("fade-in");
   }, 300);
 
-  // Fade in text
-  setTimeout(() => {
-    document.getElementById("question").classList.add("show-text");
-  }, 1800);
+  // Typing effect
+  function typeText(text, speed) {
+    let i = 0;
+    const interval = setInterval(() => {
+      textElement.innerHTML += text.charAt(i);
+      i++;
+      if (i >= text.length) {
+        clearInterval(interval);
 
-  // Fade in buttons
+        // Show buttons after typing finishes
+        setTimeout(() => {
+          document.getElementById("buttons").classList.add("show-buttons");
+        }, 600);
+      }
+    }, speed);
+  }
+
+  // Dramatic pause before typing starts
   setTimeout(() => {
-    document.getElementById("buttons").classList.add("show-buttons");
-  }, 2500);
+    typeText(message, 60);
+  }, 1500);
 
 });
 </script>
