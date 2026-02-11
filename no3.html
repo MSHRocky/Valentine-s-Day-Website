@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oh No 💔</title>
 
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #4d0000, #800000, #330000); /* sad dark red gradient */
+    color: white;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    min-height: 100px; /* reserve space for typing */
+  }
+
+  .button-container {
+    display: flex;
+    gap: 40px;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  .show-buttons {
+    opacity: 1;
+  }
+
+  button {
+    padding: 14px 36px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: white;
+    color: #800000;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255,255,255,0.8);
+  }
+</style>
+</head>
+
+<body>
+
+<h1 id="typingText"></h1>
+
+<div class="button-container" id="buttons">
+  <button onclick="window.location.href='yes3.html'">Just Joking, I'd Love To</button>
+  <button onclick="window.location.href='no4.html'">No, I Don't</button>
+</div>
+
+<!-- Sad background music -->
+<audio id="sadMusic" autoplay loop>
+  <source src="sad.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const textElement = document.getElementById("typingText");
+  const buttons = document.getElementById("buttons");
+  const message = "Really Suya, you being serious? You don't want to be my Valentine?";
+  let i = 0;
+
+  function typeWriter() {
+    if (i < message.length) {
+      textElement.innerHTML += message.charAt(i);
+      i++;
+      setTimeout(typeWriter, 50); // typing speed
+    } else {
+      buttons.classList.add("show-buttons"); // show buttons after typing
+    }
+  }
+
+  // small pause before typing starts
+  setTimeout(typeWriter, 800);
+});
+</script>
+
+</body>
+</html>
