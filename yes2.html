@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>See you soon!</title>
+<title>See You Soon ❤️</title>
 
 <style>
 body {
@@ -80,7 +80,7 @@ p {
   100% { box-shadow: 0 0 10px rgba(255,105,135,0.6); }
 }
 
-/* Floating hearts and sparkles */
+/* Floating hearts & sparkles */
 .love-button::before,
 .love-button::after {
   position: absolute;
@@ -127,13 +127,16 @@ p {
 
 <div class="container">
   <h1>Still spending Valentine's Day with you &lt;3 !!!</h1>
-  <p>It was worth a try sweetheart. All good, maybe another time. Still excited to take your cute ass out and spend Valentine's Day together.</p>
+  <p>
+    It was worth a try sweetheart. All good, maybe another time.
+    Still excited to take your cute self out and spend Valentine's Day together.
+  </p>
 </div>
 
-<!-- New Cinematic Button -->
+<!-- Cinematic Redirect Button -->
 <div class="button-container">
   <button id="nextButton" class="love-button"
-    <button onclick="nextPage('newask.html')">...</button>
+    onclick="window.location.href='newask.html'">
     ...
   </button>
 </div>
@@ -145,12 +148,11 @@ p {
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+
   const backgroundMusic = document.getElementById("backgroundMusic");
 
   function playAudio() {
-    backgroundMusic.play().catch(error => {
-      console.log("Autoplay prevented.", error);
-    });
+    backgroundMusic.play().catch(() => {});
     document.removeEventListener("click", playAudio);
   }
 
@@ -160,6 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     document.getElementById("nextButton").classList.add("show");
   }, 3000);
+
 });
 </script>
 
