@@ -21,100 +21,70 @@ body {
   overflow: hidden;
 }
 
-.gif-container {
-  margin-bottom: 20px;
-}
-
 .gif-container img {
   max-width: 90%;
-  height: auto;
   border-radius: 10px;
-}
-
-.container {
-  text-align: center;
 }
 
 h1 {
   font-size: 2.5rem;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 p {
   font-size: 1.2rem;
-  margin-bottom: 30px;
+  margin: 20px 0;
 }
 
-/* Romantic Cinematic Button */
+/* Button container */
 .button-container {
   position: fixed;
   bottom: 70px;
   left: 50%;
   transform: translateX(-50%);
-}
-
-.love-button {
   opacity: 0;
-  padding: 16px 32px;
-  font-size: 22px;
-  font-weight: bold;
-  background: linear-gradient(45deg, #ff4d6d, #ff758f);
-  color: white;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  position: relative;
   transition: opacity 1.5s ease;
-  box-shadow: 0 0 15px rgba(255, 105, 135, 0.6);
-  animation: pulse 2s infinite;
 }
 
 .show {
   opacity: 1;
 }
 
-/* Pulsating glow */
+/* Romantic glowing button */
+.love-button {
+  padding: 16px 32px;
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ff4d6d, #ff758f);
+  color: white;
+  border-radius: 15px;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 0 15px rgba(255,105,135,0.6);
+  animation: pulse 2s infinite;
+}
+
+/* Glow animation */
 @keyframes pulse {
   0% { box-shadow: 0 0 10px rgba(255,105,135,0.6); }
   50% { box-shadow: 0 0 30px rgba(255,105,135,1); }
   100% { box-shadow: 0 0 10px rgba(255,105,135,0.6); }
 }
 
-/* Floating hearts & sparkles */
-.love-button::before,
-.love-button::after {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 18px;
-  animation: floatHearts 3s ease-in-out infinite;
-  opacity: 0.9;
-}
-
+/* Floating sparkles */
 .love-button::before {
   content: "💖 ✨ 💕";
+  position: absolute;
   top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: floatUp 3s infinite ease-in-out;
 }
 
-.love-button::after {
-  content: "✨ 💗 💫";
-  top: -55px;
-  animation-delay: 1.5s;
-}
-
-@keyframes floatHearts {
-  0% {
-    transform: translate(-50%, 0px);
-    opacity: 0;
-  }
-  50% {
-    transform: translate(-50%, -20px);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -45px);
-    opacity: 0;
-  }
+@keyframes floatUp {
+  0% { opacity: 0; transform: translate(-50%, 0); }
+  50% { opacity: 1; transform: translate(-50%, -20px); }
+  100% { opacity: 0; transform: translate(-50%, -40px); }
 }
 </style>
 </head>
@@ -125,44 +95,32 @@ p {
   <img src="seeyou.gif" alt="Begging Cat">
 </div>
 
-<div class="container">
-  <h1>Still spending Valentine's Day with you <3 !!!</h1>
-  <p>
-    It was worth a try sweetheart. All good, maybe another time.
-    Still excited to take your cute self out and spend Valentine's Day together.
-  </p>
+<h1>Still spending Valentine's Day with you &lt;3 !!!</h1>
+
+<p>
+It was worth a try sweetheart. Still excited to take you out and spend Valentine's Day together.
+</p>
+
+<div class="button-container" id="buttonContainer">
+  <!-- Using anchor tag instead of JS redirect -->
+  <a href="newask.html" class="love-button">...</a>
 </div>
 
-<!-- Cinematic Redirect Button -->
-<div class="button-container">
-  <button id="nextButton" class="love-button"
-    onclick="window.location.href='newask.html'">
-    ...
-  </button>
-</div>
-
-<!-- Background Music -->
 <audio id="backgroundMusic">
   <source src="jd.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+// Fade in button after 3 seconds
+setTimeout(() => {
+  document.getElementById("buttonContainer").classList.add("show");
+}, 3000);
 
-  const backgroundMusic = document.getElementById("backgroundMusic");
-
-  function playAudio() {
-    backgroundMusic.play().catch(() => {});
-    document.removeEventListener("click", playAudio);
-  }
-
-  document.addEventListener("click", playAudio);
-
-  // Fade in button after 3 seconds
-  setTimeout(() => {
-    document.getElementById("nextButton").classList.add("show");
-  }, 3000);
-
+// Play music on first click anywhere
+document.addEventListener("click", function playAudio() {
+  const music = document.getElementById("backgroundMusic");
+  music.play().catch(() => {});
+  document.removeEventListener("click", playAudio);
 });
 </script>
 
