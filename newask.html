@@ -15,22 +15,16 @@ body {
   align-items: center;
   flex-direction: column;
   font-family: Arial, sans-serif;
-  background: black;
-  color: white;
-  overflow: hidden;
-  transition: background 3s ease;
-}
-
-/* Romantic fade background */
-body.fade-in {
   background: linear-gradient(135deg, #ff758f, #ff4d6d, #ff2e63);
+  color: white;
+  text-align: center;
 }
 
+/* Typing text */
 h1 {
   font-size: 2.8rem;
   margin-bottom: 40px;
   min-height: 80px;
-  text-align: center;
 }
 
 /* Buttons */
@@ -38,7 +32,7 @@ h1 {
   display: flex;
   gap: 50px;
   opacity: 0;
-  transition: opacity 2s ease;
+  transition: opacity 1.5s ease;
 }
 
 .show-buttons {
@@ -74,37 +68,26 @@ button:hover {
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function() {
 
   const textElement = document.getElementById("typingText");
+  const buttons = document.getElementById("buttons");
   const message = "Will you be my Valentine? ❤️";
 
-  // Fade in background
-  setTimeout(() => {
-    document.body.classList.add("fade-in");
-  }, 300);
+  let i = 0;
 
-  // Typing effect
-  function typeText(text, speed) {
-    let i = 0;
-    const interval = setInterval(() => {
-      textElement.innerHTML += text.charAt(i);
+  function typeWriter() {
+    if (i < message.length) {
+      textElement.innerHTML += message.charAt(i);
       i++;
-      if (i >= text.length) {
-        clearInterval(interval);
-
-        // Show buttons after typing finishes
-        setTimeout(() => {
-          document.getElementById("buttons").classList.add("show-buttons");
-        }, 600);
-      }
-    }, speed);
+      setTimeout(typeWriter, 60);
+    } else {
+      buttons.classList.add("show-buttons");
+    }
   }
 
-  // Dramatic pause before typing starts
-  setTimeout(() => {
-    typeText(message, 60);
-  }, 1500);
+  // Small dramatic pause before typing starts
+  setTimeout(typeWriter, 800);
 
 });
 </script>
