@@ -135,9 +135,12 @@ p {
 
 <!-- Cinematic Redirect Button -->
 <div class="button-container">
-  <button id="nextButton" class="love-button"
-    onclick="window.location.href='newask.html'">
-    ...
+<button id="nextButton" class="love-button">...</button>
+
+<script>
+document.getElementById("nextButton").addEventListener("click", () => {
+    window.location.href = "newask.html"; // must match exact filename
+});
   </button>
 </div>
 
