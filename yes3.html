@@ -6,6 +6,7 @@
 <title>Valentine Quiz Start 💖</title>
 
 <style>
+/* Cinematic animated background */
 body {
   margin: 0;
   padding: 0;
@@ -19,28 +20,39 @@ body {
   text-align: center;
   overflow: hidden;
   position: relative;
-  background: linear-gradient(135deg, #ffb6c1, #ff4d6d); /* romantic pink gradient */
+  background: linear-gradient(135deg, #ffb6c1, #ff4d6d);
+  animation: backgroundShift 15s ease-in-out infinite alternate;
 }
 
-/* Typing text */
+/* Background gradient animation */
+@keyframes backgroundShift {
+  0% { background: linear-gradient(135deg, #ffb6c1, #ff4d6d); }
+  50% { background: linear-gradient(135deg, #ff7fa3, #ff3366); }
+  100% { background: linear-gradient(135deg, #ffb6c1, #ff4d6d); }
+}
+
+/* Typing text with glow */
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 20px;
   min-height: 80px;
   line-height: 1.3;
   z-index: 2;
   position: relative;
+  text-shadow: 0 0 10px #fff, 0 0 20px #ffb6c1, 0 0 30px #ff4d6d;
 }
 
+/* Subtitle smaller font */
 p {
   font-size: 1.2rem;
   margin-bottom: 50px;
   z-index: 2;
   position: relative;
   min-height: 60px;
+  text-shadow: 0 0 5px #fff;
 }
 
-/* Buttons */
+/* Buttons container */
 .button-container {
   display: flex;
   gap: 30px;
@@ -50,12 +62,14 @@ p {
   position: relative;
 }
 
+/* Buttons appear */
 .show-buttons {
   opacity: 1;
 }
 
+/* Cinematic button styling */
 button {
-  padding: 14px 36px;
+  padding: 16px 40px;
   font-size: 20px;
   font-weight: bold;
   border: none;
@@ -64,25 +78,36 @@ button {
   background: linear-gradient(45deg, #ff758f, #ff4d6d);
   color: white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 105, 135, 0.5);
+  animation: pulseButton 2s infinite;
 }
 
 button:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(255,255,255,0.8);
+  box-shadow: 0 0 25px rgba(255, 105, 135, 0.8);
 }
 
-/* Floating sparkles */
+/* Button pulse */
+@keyframes pulseButton {
+  0% { box-shadow: 0 0 10px rgba(255,105,135,0.5); }
+  50% { box-shadow: 0 0 25px rgba(255,105,135,0.8); }
+  100% { box-shadow: 0 0 10px rgba(255,105,135,0.5); }
+}
+
+/* Sparkles */
 .sparkle {
   position: absolute;
   font-size: 18px;
-  animation: floatSparkle 4s linear infinite;
+  animation: floatSparkle 4s ease-in-out infinite;
   opacity: 0.8;
+  pointer-events: none;
 }
 
+/* Sparkle floating effect */
 @keyframes floatSparkle {
   0% { transform: translateY(0) translateX(0); opacity: 0; }
   50% { opacity: 1; }
-  100% { transform: translateY(-150px) translateX(20px); opacity: 0; }
+  100% { transform: translateY(-150px) translateX(30px); opacity: 0; }
 }
 </style>
 </head>
@@ -133,18 +158,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
   setTimeout(typeMain, 800);
 
-  // Floating sparkles
+  // Floating sparkles for cinematic effect
   const sparkleEmojis = ["✨", "💫", "💖"];
   function createSparkle() {
     const sparkle = document.createElement("div");
     sparkle.className = "sparkle";
     sparkle.style.left = Math.random() * window.innerWidth + "px";
+    sparkle.style.top = Math.random() * window.innerHeight + "px";
     sparkle.style.fontSize = (15 + Math.random()*15) + "px";
     sparkle.innerText = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
     document.body.appendChild(sparkle);
     setTimeout(() => sparkle.remove(), 4000);
   }
-  setInterval(createSparkle, 500);
+
+  setInterval(createSparkle, 400); // create multiple sparkles continuously
 });
 </script>
 
