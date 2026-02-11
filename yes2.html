@@ -21,19 +21,28 @@ body {
   overflow: hidden;
 }
 
+.gif-container {
+  margin-bottom: 20px;
+}
+
 .gif-container img {
   max-width: 90%;
+  height: auto;
   border-radius: 10px;
+}
+
+.container {
+  text-align: center;
 }
 
 h1 {
   font-size: 2.5rem;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 p {
   font-size: 1.2rem;
-  margin: 20px 0;
+  margin-bottom: 30px;
 }
 
 /* Button container */
@@ -42,49 +51,71 @@ p {
   bottom: 70px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+/* Romantic Button */
+.love-button {
   opacity: 0;
+  padding: 16px 32px;
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ff4d6d, #ff758f);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  position: relative;
   transition: opacity 1.5s ease;
+  box-shadow: 0 0 15px rgba(255, 105, 135, 0.6);
+  animation: pulse 2s infinite;
 }
 
 .show {
   opacity: 1;
 }
 
-/* Romantic glowing button */
-.love-button {
-  padding: 16px 32px;
-  font-size: 22px;
-  font-weight: bold;
-  background: linear-gradient(45deg, #ff4d6d, #ff758f);
-  color: white;
-  border-radius: 15px;
-  text-decoration: none;
-  display: inline-block;
-  box-shadow: 0 0 15px rgba(255,105,135,0.6);
-  animation: pulse 2s infinite;
-}
-
-/* Glow animation */
+/* Pulsating glow */
 @keyframes pulse {
   0% { box-shadow: 0 0 10px rgba(255,105,135,0.6); }
   50% { box-shadow: 0 0 30px rgba(255,105,135,1); }
   100% { box-shadow: 0 0 10px rgba(255,105,135,0.6); }
 }
 
-/* Floating sparkles */
-.love-button::before {
-  content: "💖 ✨ 💕";
+/* Floating hearts & sparkles */
+.love-button::before,
+.love-button::after {
   position: absolute;
-  top: -30px;
   left: 50%;
   transform: translateX(-50%);
-  animation: floatUp 3s infinite ease-in-out;
+  font-size: 18px;
+  animation: floatHearts 3s ease-in-out infinite;
+  opacity: 0.9;
 }
 
-@keyframes floatUp {
-  0% { opacity: 0; transform: translate(-50%, 0); }
-  50% { opacity: 1; transform: translate(-50%, -20px); }
-  100% { opacity: 0; transform: translate(-50%, -40px); }
+.love-button::before {
+  content: "💖 ✨ 💕";
+  top: -30px;
+}
+
+.love-button::after {
+  content: "✨ 💗 💫";
+  top: -55px;
+  animation-delay: 1.5s;
+}
+
+@keyframes floatHearts {
+  0% {
+    transform: translate(-50%, 0px);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -20px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -45px);
+    opacity: 0;
+  }
 }
 </style>
 </head>
@@ -92,34 +123,52 @@ p {
 <body>
 
 <div class="gif-container">
-  <img src="seeyou.gif" alt="Begging Cat">
+  <img src="seeyou.gif" alt="Cute GIF">
 </div>
 
-<h1>Still spending Valentine's Day with you &lt;3 !!!</h1>
-
-<p>
-It was worth a try sweetheart. Still excited to take you out and spend Valentine's Day together.
-</p>
-
-<div class="button-container" id="buttonContainer">
-  <button onclick="nextPage('newask.html')">...</button>
+<div class="container">
+  <h1>Still spending Valentine's Day with you &lt;3 !!!</h1>
+  <p>
+    It was worth a try sweetheart. All good, maybe another time.
+    Still excited to take your cute self out and spend Valentine's Day together.
+  </p>
 </div>
 
+<div class="button-container">
+  <button id="nextButton" class="love-button">
+    ...
+  </button>
+</div>
+
+<!-- Background Music -->
 <audio id="backgroundMusic">
   <source src="jd.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// Fade in button after 3 seconds
-setTimeout(() => {
-  document.getElementById("buttonContainer").classList.add("show");
-}, 3000);
+document.addEventListener("DOMContentLoaded", () => {
 
-// Play music on first click anywhere
-document.addEventListener("click", function playAudio() {
-  const music = document.getElementById("backgroundMusic");
-  music.play().catch(() => {});
-  document.removeEventListener("click", playAudio);
+  const backgroundMusic = document.getElementById("backgroundMusic");
+  const nextButton = document.getElementById("nextButton");
+
+  // Play music on first click (browser autoplay policy fix)
+  function playAudio() {
+    backgroundMusic.play().catch(() => {});
+    document.removeEventListener("click", playAudio);
+  }
+
+  document.addEventListener("click", playAudio);
+
+  // Fade in button after 3 seconds
+  setTimeout(() => {
+    nextButton.classList.add("show");
+  }, 3000);
+
+  // Redirect when button is clicked
+  nextButton.addEventListener("click", () => {
+    window.location.href = "newask.html";
+  });
+
 });
 </script>
 
