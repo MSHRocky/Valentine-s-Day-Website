@@ -1,96 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>One More Thing ❤️</title>
-
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #ff758f, #ff4d6d, #ff2e63);
-  color: white;
-  text-align: center;
-}
-
-/* Typing text */
-h1 {
-  font-size: 2.8rem;
-  margin-bottom: 40px;
-  min-height: 80px;
-}
-
-/* Buttons */
-.button-container {
-  display: flex;
-  gap: 50px;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
-
-.show-buttons {
-  opacity: 1;
-}
-
-button {
-  padding: 15px 40px;
-  font-size: 22px;
-  font-weight: bold;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  background-color: white;
-  color: #ff2e63;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(255,255,255,0.8);
-}
-</style>
+  <title>Test Page</title>
 </head>
+<body style="background:pink; text-align:center; font-family:Arial;">
 
-<body>
+  <h1 style="margin-top:200px;">THIS PAGE WORKS 💖</h1>
 
-<h1 id="typingText"></h1>
-
-<div class="button-container" id="buttons">
   <button onclick="window.location.href='yes3.html'">Yes</button>
   <button onclick="window.location.href='no3.html'">No</button>
-</div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-
-  const textElement = document.getElementById("typingText");
-  const buttons = document.getElementById("buttons");
-  const message = "Will you be my Valentine? ❤️";
-
-  let i = 0;
-
-  function typeWriter() {
-    if (i < message.length) {
-      textElement.innerHTML += message.charAt(i);
-      i++;
-      setTimeout(typeWriter, 60);
-    } else {
-      buttons.classList.add("show-buttons");
-    }
-  }
-
-  // Small dramatic pause before typing starts
-  setTimeout(typeWriter, 800);
-
-});
-</script>
 
 </body>
 </html>
