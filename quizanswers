@@ -6,13 +6,13 @@ const quiz = [
   { q: "What is my favourite physical feature about you?", options:["Hips","Big Big BIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIG Bum Bum","Eyes","Feet"], answer: "Eyes", type: "mc" },
   
   // Medium (text input)
-  { q: "Where was I born?", answer: "United Kingdom", type: "text" },
-  { q: "What is my love language?", answer: "Phy7sical Touch", type: "text" },
-  { q: "What is my favourite movie?", answer: "The Water Horse", type: "text" },
+  { q: "Where was I born?", answer: ["United Kingdom","UK", "uk", "Uk", "London", "Essex", "london", "England", "englad"], type: "text" },
+  { q: "What is my love language?", answer: ["Physical Touch", "physical touch", "Physical", "physical", "Touch", "touch", "Touching", "touching", "Physically Touching", "physically touching", "Physically touching"], type: "text" },
+  { q: "What is my favourite movie?", answer: ["The Water Horse", "The water horse", "The Waterhorse", "The Waterhorse:Legend of the Deep", "The Water Horse:Legend of the Deep", "Our movies", "Our Movies", "Ghilli", "ghilli"], type: "text" },
 
   // Hard (text input)
-  { q: "What is my type?", answer: "Me", type: "text" },
-  { q: "Who is my favourite English film actor?", answer: "Adam Sandler", type: "text" },
-  { q: "What are one of my dealbreakers in a relationship?", answer: "Disrespect", type: "text" },
+  { q: "What is my type?", answer: ["Me", "Suyani", "suyani", "Suya", "suya", "Suyani Suthakaran", "Suyani suthakaran", "me"], type: "text" },
+  { q: "Who is my favourite English film actor?", answer: ["Adam Sandler", "adam sandler", "Adam sandler", "Adam", "adam", "sandler", "Sandler"], type: "text" },
+  { q: "What are one of my dealbreakers in a relationship?", answer: ["Disrespect", "disresepct", "Lack of communication", "Lack Of Communication", "Lack of Communication", "Disloyalty", "disloyalty", "Cheating", "cheating", "Lieing", "lieing", "Materialistic", "materialistic", "Materialism", "materialism", "Narrow Minded", "narrrow minded", "Narrow minded", "Narrow-minded"], type: "text" },
 ];
 
