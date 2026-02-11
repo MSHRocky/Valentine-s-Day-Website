@@ -1,1 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rules ❤️</title>
 
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff9aa2, #ff4d6d, #ff2e63);
+  overflow: hidden;
+  color: white;
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 8s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+/* Card */
+.rules-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  padding: 40px 50px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.2);
+  animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1.2rem;
+  line-height: 1.8;
+}
+
+li::before {
+  content: "💖 ";
+}
+
+button {
+  margin-top: 25px;
+  padding: 14px 35px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: white;
+  color: #ff2e63;
+  font-weight: bold;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255,255,255,0.8);
+}
+</style>
+</head>
+
+<body>
+
+<div class="rules-card">
+  <h1>The Rules 💌</h1>
+  <ul>
+    <li>No overthinking allowed.</li>
+    <li>You must answer honestly.</li>
+    <li>Smiling is mandatory.</li>
+    <li>There are no wrong answers… unless you pick the wrong one 😉</li>
+  </ul>
+
+  <button onclick="window.location.href='quiz.html'">
+    I Understand 💕
+  </button>
+</div>
+
+<script>
+// Floating hearts generator
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 15 + 15) + "px";
+  heart.style.animationDuration = (Math.random() * 3 + 5) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 8000);
+}
+
+setInterval(createHeart, 600);
+</script>
+
+</body>
+</html>
