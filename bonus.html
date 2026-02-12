@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonus Question 👑</title>
+
+<style>
+
+/* ---------------- BODY ---------------- */
+body {
+  margin: 0;
+  font-family: 'Trebuchet MS', sans-serif;
+  background: linear-gradient(135deg, #ffd700, #ffb700, #ffc94d);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  text-align: center;
+  transition: 0.2s;
+}
+
+/* ---------------- FLASH EFFECT ---------------- */
+.flash {
+  animation: flashScreen 0.4s;
+}
+
+@keyframes flashScreen {
+  0% { background: white; }
+  100% { background: linear-gradient(135deg, #ffd700, #ffb700, #ffc94d); }
+}
+
+/* ---------------- GLITCH EFFECT ---------------- */
+.glitch {
+  animation: glitch 0.4s infinite;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); filter: hue-rotate(0deg); }
+  20% { transform: translate(-5px, 5px); filter: hue-rotate(90deg); }
+  40% { transform: translate(5px, -5px); filter: hue-rotate(180deg); }
+  60% { transform: translate(-5px, -5px); filter: hue-rotate(270deg); }
+  80% { transform: translate(5px, 5px); filter: hue-rotate(360deg); }
+  100% { transform: translate(0); filter: hue-rotate(0deg); }
+}
+
+/* ---------------- CONTAINER ---------------- */
+.container {
+  background: rgba(255,255,255,0.1);
+  padding: 50px;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 40px rgba(255,255,255,0.6);
+  max-width: 700px;
+  width: 90%;
+}
+
+/* ---------------- TIMER ---------------- */
+.timer {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  text-shadow: 0 0 20px white;
+}
+
+.low-time {
+  color: red;
+  animation: pulse 0.6s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* ---------------- SELECT ---------------- */
+select {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  margin: 8px;
+  min-width: 140px;
+}
+
+button {
+  margin-top: 25px;
+  padding: 14px 35px;
+  font-size: 18px;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  background: white;
+  color: #d4a200;
+  font-weight: bold;
+  transition: 0.3s ease;
+  box-shadow: 0 0 20px rgba(255,255,255,0.7);
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+/* ---------------- GOLD EXPLOSION ---------------- */
+.explosion {
+  position: absolute;
+  border-radius: 50%;
+  animation: explode 1.5s ease-out forwards;
+}
+
+@keyframes explode {
+  from { transform: translate(0,0) scale(1); opacity: 1; }
+  to { transform: translate(var(--x), var(--y)) scale(0.3); opacity: 0; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="timer" id="timer">20</div>
+
+  <h1>👑 BONUS ROUND 👑</h1>
+  <p>What date did our story officially begin?</p>
+
+  <div>
+    <select id="month"></select>
+    <select id="day"></select>
+    <select id="year"></select>
+  </div>
+
+  <button onclick="checkDate()">Submit Answer</button>
+
+</div>
+
+<script>
+
+/* ---------------- POPULATE DATE ---------------- */
+
+const months = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
+];
+
+const monthSelect = document.getElementById("month");
+months.forEach((m, i) => {
+  let option = document.createElement("option");
+  option.value = i + 1;
+  option.text = m;
+  monthSelect.appendChild(option);
+});
+
+for (let i = 1; i <= 31; i++) {
+  let option = document.createElement("option");
+  option.value = i;
+  option.text = i;
+  document.getElementById("day").appendChild(option);
+}
+
+for (let y = 2015; y <= 2025; y++) {
+  let option = document.createElement("option");
+  option.value = y;
+  option.text = y;
+  document.getElementById("year").appendChild(option);
+}
+
+/* ---------------- COUNTDOWN ---------------- */
+
+let timeLeft = 20;
+let timerEl = document.getElementById("timer");
+
+let countdown = setInterval(() => {
+  timeLeft--;
+  timerEl.textContent = timeLeft;
+
+  if (timeLeft <= 5) {
+    timerEl.classList.add("low-time");
+  }
+
+  if (timeLeft <= 0) {
+    clearInterval(countdown);
+    failSequence();
+  }
+}, 1000);
+
+/* ---------------- CHECK DATE ---------------- */
+
+let attempted = false;
+
+function checkDate() {
+
+  if (attempted) return;
+  attempted = true;
+  clearInterval(countdown);
+
+  const month = parseInt(monthSelect.value);
+  const day = parseInt(document.getElementById("day").value);
+  const year = parseInt(document.getElementById("year").value);
+
+  if (month === 12 && day === 3 && year === 2022) {
+    winSequence();
+  } else {
+    failSequence();
+  }
+}
+
+/* ---------------- WIN SEQUENCE ---------------- */
+
+function winSequence() {
+
+  document.body.classList.add("flash");
+  goldenExplosion();
+
+  setTimeout(() => {
+    window.location.href = "offer.html";
+  }, 1800);
+}
+
+/* ---------------- FAIL SEQUENCE ---------------- */
+
+function failSequence() {
+
+  document.body.classList.add("glitch");
+
+  setTimeout(() => {
+    window.location.href = "failure.html";
+  }, 1500);
+}
+
+/* ---------------- GOLDEN EXPLOSION ---------------- */
+
+function goldenExplosion() {
+
+  const colors = ["#ffd700","#ffea00","#fff176","#fff9c4","#ffffff"];
+
+  for (let i = 0; i < 120; i++) {
+
+    const particle = document.createElement("div");
+    particle.className = "explosion";
+
+    const color = colors[Math.floor(Math.random()*colors.length)];
+
+    particle.style.background = color;
+    particle.style.boxShadow = "0 0 25px " + color;
+
+    const size = Math.random() * 12 + 10;
+    particle.style.width = size + "px";
+    particle.style.height = size + "px";
+
+    particle.style.left = "50%";
+    particle.style.top = "50%";
+
+    const angle = Math.random() * 2 * Math.PI;
+    const radius = Math.random() * 400 + 200;
+
+    particle.style.setProperty("--x", Math.cos(angle) * radius + "px");
+    particle.style.setProperty("--y", Math.sin(angle) * radius + "px");
+
+    document.body.appendChild(particle);
+
+    setTimeout(() => particle.remove(), 1500);
+  }
+}
+
+</script>
+
+</body>
+</html>
