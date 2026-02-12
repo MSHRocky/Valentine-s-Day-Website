@@ -10,65 +10,55 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: 'Georgia', serif;
+    background: linear-gradient(to bottom, #87CEEB, #1e3c72);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
+    text-align: center;
     color: white;
 }
 
-/* Ocean Video */
-video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    min-height: 100%;
-    object-fit: cover;
-    z-index: -2;
+/* Ocean waves */
+.wave {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 200px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 43%;
+    animation: waveMove 10s infinite linear;
 }
 
-.overlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 25, 60, 0.55);
-    z-index: -1;
+.wave:nth-child(2) {
+    bottom: 10px;
+    opacity: 0.5;
+    animation-duration: 15s;
 }
 
-/* Text Container */
+@keyframes waveMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
 .container {
     position: relative;
-    z-index: 5;
-    max-width: 850px;
-    margin: auto;
-    text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
+    z-index: 2;
+    max-width: 800px;
 }
 
-/* Glowing text */
 .typing {
-    font-size: 1.6rem;
-    margin: 20px 0;
+    font-size: 1.5rem;
+    margin: 15px 0;
     min-height: 30px;
-    text-shadow:
-        0 0 5px #aeefff,
-        0 0 15px #7dd3ff,
-        0 0 25px rgba(0,200,255,0.6);
-    animation: pulse 4s infinite ease-in-out;
 }
 
-@keyframes pulse {
-    0% { text-shadow: 0 0 5px #aeefff; }
-    50% { text-shadow: 0 0 25px #7dd3ff; }
-    100% { text-shadow: 0 0 5px #aeefff; }
-}
-
-/* Buttons */
 .buttons {
     margin-top: 40px;
 }
 
 button {
-    padding: 15px 35px;
+    padding: 15px 30px;
     margin: 10px;
     font-size: 1.2rem;
     border-radius: 30px;
@@ -88,8 +78,8 @@ button {
 }
 
 .notready {
-    background: rgba(255,255,255,0.7);
-    color: #003366;
+    background: #ffffffaa;
+    color: #333;
 }
 
 .notready:hover {
@@ -97,24 +87,25 @@ button {
     transform: scale(1.1);
 }
 
-/* Animals */
+/* Floating animals */
 .animal {
     position: absolute;
-    font-size: 28px;
-    pointer-events: none;
-    will-change: transform;
+    font-size: 30px;
+    animation: floatAcross linear infinite;
+}
+
+@keyframes floatAcross {
+    0% {
+        transform: translateX(-10vw) translateY(0);
+    }
+    100% {
+        transform: translateX(110vw) translateY(-50px);
+    }
 }
 
 </style>
 </head>
 <body>
-
-<!-- Ocean Background -->
-<video autoplay muted loop playsinline>
-    <source src="https://cdn.coverr.co/videos/coverr-waves-crashing-on-the-shore-1573/1080p.mp4" type="video/mp4">
-</video>
-
-<div class="overlay"></div>
 
 <div class="container">
     <div id="line1" class="typing"></div>
@@ -134,13 +125,15 @@ button {
     </div>
 </div>
 
-<script>
+<div class="wave"></div>
+<div class="wave"></div>
 
-/* Typing Animation */
+<script>
+// Typing animation
 const lines = [
-"Relax, buttons Kutty, you got this 🌊",
+"Relax, Suya Kutty, you got this 🌊",
 "Just take a deep breath and breathe out...",
-"Imagine yourself sitting in the sun with the waves crashing against the shore",
+"Imagine laying in the sun with the waves crashing against the shore",
 "Imagine being surrounded by nothing but birds chirping and murping all around you",
 "Imagine me right beside you squeezing your tiny hand telling you that I believe in you",
 "Believe in yourself Suya, you got this 💙"
@@ -155,7 +148,7 @@ function typeLine(text, elementId, speed, callback) {
             i++;
             setTimeout(typing, speed);
         } else if (callback) {
-            setTimeout(callback, 1000);
+            setTimeout(callback, 800);
         }
     }
     typing();
@@ -163,7 +156,7 @@ function typeLine(text, elementId, speed, callback) {
 
 function startTyping(index = 0) {
     if (index < lines.length) {
-        typeLine(lines[index], "line" + (index + 1), 45, () => {
+        typeLine(lines[index], "line" + (index + 1), 40, () => {
             startTyping(index + 1);
         });
     }
@@ -171,71 +164,24 @@ function startTyping(index = 0) {
 
 startTyping();
 
-/* TRUE RANDOM FLIGHT */
+// Floating birds/ducks/chickens
 const animals = ["🐦","🕊️","🦆","🐔","🐤"];
 
-function randomFlight() {
-    const bird = document.createElement("div");
-    bird.classList.add("animal");
-    bird.innerHTML = animals[Math.floor(Math.random() * animals.length)];
-    document.body.appendChild(bird);
+function createAnimal() {
+    const animal = document.createElement("div");
+    animal.classList.add("animal");
+    animal.innerHTML = animals[Math.floor(Math.random() * animals.length)];
+    animal.style.top = Math.random() * 80 + "vh";
+    animal.style.animationDuration = (10 + Math.random() * 10) + "s";
+    document.body.appendChild(animal);
 
-    let startX = Math.random() * window.innerWidth;
-    let startY = Math.random() * window.innerHeight;
-
-    let endX = Math.random() * window.innerWidth;
-    let endY = Math.random() * window.innerHeight;
-
-    bird.style.left = startX + "px";
-    bird.style.top = startY + "px";
-
-    bird.animate([
-        { transform: `translate(0px,0px)` },
-        { transform: `translate(${endX-startX}px, ${endY-startY}px)` }
-    ], {
-        duration: 8000 + Math.random()*5000,
-        easing: "ease-in-out"
-    });
-
-    setTimeout(() => bird.remove(), 13000);
+    setTimeout(() => {
+        animal.remove();
+    }, 20000);
 }
 
-setInterval(randomFlight, 1200);
-
-/* HEART SHAPED FLIGHT USING MATH */
-function heartFlight() {
-    const bird = document.createElement("div");
-    bird.classList.add("animal");
-    bird.innerHTML = "🕊️";
-    document.body.appendChild(bird);
-
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    const scale = 10;
-
-    let t = 0;
-
-    const interval = setInterval(() => {
-        let x = 16 * Math.pow(Math.sin(t), 3);
-        let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
-
-        bird.style.left = centerX + x * scale + "px";
-        bird.style.top = centerY + y * scale + "px";
-
-        t += 0.05;
-
-        if (t > Math.PI * 2) {
-            clearInterval(interval);
-            bird.remove();
-        }
-
-    }, 30);
-}
-
-setInterval(heartFlight, 15000);
-
+setInterval(createAnimal, 2000);
 </script>
 
 </body>
 </html>
-
