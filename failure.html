@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goodbye...</title>
+
+<style>
+
+body {
+  margin: 0;
+  background: linear-gradient(#0a0a0a, #000000);
+  overflow: hidden;
+  font-family: 'Courier New', monospace;
+  color: white;
+}
+
+/* -------- Rain -------- */
+.rain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.drop {
+  position: absolute;
+  width: 2px;
+  height: 25px;
+  background: rgba(200,200,255,0.6);
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  from { transform: translateY(-100vh); }
+  to { transform: translateY(100vh); }
+}
+
+/* -------- Thunder Flash -------- */
+.flash {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* -------- Text -------- */
+.text-container {
+  position: absolute;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 1.8;
+}
+
+.line {
+  opacity: 0;
+  margin: 15px 0;
+}
+
+/* -------- Caped Figure -------- */
+.hero {
+  position: absolute;
+  top: 55%;
+  left: 45%;
+  width: 60px;
+  height: 120px;
+  animation: walk 12s forwards;
+}
+
+@keyframes walk {
+  0% { top: 55%; left: 45%; }
+  100% { top: 85%; left: 5%; }
+}
+
+.hero-head {
+  width: 40px;
+  height: 40px;
+  background: #111;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.hero-body {
+  width: 40px;
+  height: 70px;
+  background: #111;
+  margin: auto;
+  border-radius: 20px;
+}
+
+.cape {
+  width: 60px;
+  height: 80px;
+  background: #050505;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  border-radius: 50%;
+  transform: rotate(10deg);
+}
+
+/* -------- Fade to Black -------- */
+.fade-black {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 10s linear;
+}
+
+</style>
+</head>
+<body>
+
+<div class="rain" id="rain"></div>
+<div class="flash" id="flash"></div>
+<div class="fade-black" id="fade"></div>
+
+<div class="text-container">
+  <div class="line" id="line1"></div>
+  <div class="line" id="line2"></div>
+  <div class="line" id="line3"></div>
+  <div class="line" id="line4"></div>
+</div>
+
+<div class="hero" id="hero">
+  <div class="cape"></div>
+  <div class="hero-head"></div>
+  <div class="hero-body"></div>
+</div>
+
+<script>
+
+/* -------- Heavy Rain -------- */
+const rainContainer = document.getElementById("rain");
+for (let i = 0; i < 350; i++) {
+  const drop = document.createElement("div");
+  drop.classList.add("drop");
+  drop.style.left = Math.random() * window.innerWidth + "px";
+  drop.style.animationDuration = (0.5 + Math.random()) + "s";
+  drop.style.animationDelay = Math.random() + "s";
+  rainContainer.appendChild(drop);
+}
+
+/* -------- Random Thunder -------- */
+function thunderFlash() {
+  const flash = document.getElementById("flash");
+  flash.style.opacity = 0.8;
+  setTimeout(() => flash.style.opacity = 0, 150);
+}
+
+setInterval(() => {
+  if (Math.random() > 0.7) thunderFlash();
+}, 3000);
+
+/* -------- Typing Animation -------- */
+const lines = [
+  "Damn, Suyani you really don't know your Valentine?",
+  "I am so sad, my eyes are sweating.",
+  "I guess I'm meant to be alone then.",
+  "Goodbye Suyani..."
+];
+
+function typeLine(text, elementId, delay, callback=null) {
+  setTimeout(() => {
+    const element = document.getElementById(elementId);
+    element.style.opacity = 1;
+    let i = 0;
+    const interval = setInterval(() => {
+      element.textContent += text.charAt(i);
+      i++;
+      if (i >= text.length) {
+        clearInterval(interval);
+        if (callback) callback();
+      }
+    }, 60);
+  }, delay);
+}
+
+/* -------- Lightning Strike + Fade Sequence -------- */
+function finalLightningAndFade() {
+
+  // Big lightning strike
+  const flash = document.getElementById("flash");
+  flash.style.opacity = 1;
+  setTimeout(() => flash.style.opacity = 0, 300);
+
+  // After hero reaches corner (12s walk) + 10s pause
+  setTimeout(() => {
+    document.getElementById("fade").style.opacity = 1;
+  }, 22000);
+}
+
+typeLine(lines[0], "line1", 1000);
+typeLine(lines[1], "line2", 5000);
+typeLine(lines[2], "line3", 9000);
+typeLine(lines[3], "line4", 13000, finalLightningAndFade);
+
+</script>
+
+</body>
+</html>
