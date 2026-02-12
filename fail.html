@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>...</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0a1a2f, #102840, #08131f);
+  font-family: 'Georgia', serif;
+  color: #dbe7ff;
+  text-align: center;
+}
+
+/* Container */
+.container {
+  max-width: 750px;
+  z-index: 2;
+}
+
+/* Text lines */
+.line {
+  font-size: 1.7rem;
+  margin: 25px 0;
+  min-height: 40px;
+  opacity: 0.95;
+  text-shadow: 0 0 10px rgba(200,220,255,0.3);
+}
+
+/* Button */
+button {
+  margin-top: 40px;
+  padding: 15px 45px;
+  font-size: 18px;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  background: #dbe7ff;
+  color: #0a1a2f;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(220,230,255,0.8);
+}
+
+/* Sad emoji rain */
+.sad {
+  position: absolute;
+  top: -30px;
+  font-size: 24px;
+  opacity: 0.6;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div id="l1" class="line"></div>
+  <div id="l2" class="line"></div>
+  <div id="l3" class="line"></div>
+  <div id="l4" class="line"></div>
+
+  <button onclick="location.href='bonus.html'">Bonus Time</button>
+</div>
+
+<script>
+
+/* Typing animation */
+const lines = [
+  "... ... ... ...",
+  "I dont know what to say, I am speechless",
+  "What do we do now?...",
+  "Its ok Suyani, I guess we just carry on"
+];
+
+function typeLine(text, el, speed, callback) {
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      el.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    } else if (callback) {
+      setTimeout(callback, 900);
+    }
+  }
+  type();
+}
+
+function startTyping(index = 0) {
+  if (index < lines.length) {
+    typeLine(
+      lines[index],
+      document.getElementById("l" + (index + 1)),
+      85,
+      () => startTyping(index + 1)
+    );
+  }
+}
+
+startTyping();
+
+/* Sad emoji rain */
+setInterval(() => {
+  const sad = document.createElement("div");
+  sad.className = "sad";
+  sad.innerText = ["😔","😢","💔","😞"][Math.floor(Math.random()*4)];
+  sad.style.left = Math.random() * window.innerWidth + "px";
+  sad.style.animationDuration = (6 + Math.random()*4) + "s";
+  document.body.appendChild(sad);
+
+  setTimeout(() => sad.remove(), 10000);
+}, 300);
+
+</script>
+
+</body>
+</html>
