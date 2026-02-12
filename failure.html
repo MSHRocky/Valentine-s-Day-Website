@@ -286,6 +286,25 @@ typeLine(lines[2], "line3", 9000);
 typeLine(lines[3], "line4", 13000, finalSequence);
 
 </script>
+<!-- Audio element -->
+  <audio id="backgroundMusic" autoplay>
+    <source src="enkaadhal.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+
+  <script>
+    function nextPage(page) {
+      window.location.href = page;
+    }
+
+    // Ensure audio plays automatically when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      backgroundMusic.play().catch(error => {
+        console.log("Autoplay prevented. User interaction needed.", error);
+      });
+    });
+  </script>
 
 </body>
 </html>
