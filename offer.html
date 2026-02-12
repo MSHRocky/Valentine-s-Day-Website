@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Congratulations!</title>
+
+<style>
+
+/* -------- PINK GRADIENT BACKGROUND -------- */
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Trebuchet MS', sans-serif;
+  background: linear-gradient(135deg, #ff9ecf, #ff6fa5, #ff4f8b);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* -------- CONGRATULATIONS -------- */
+h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  color: gold;
+  text-shadow: 0 0 20px rgba(255,215,0,0.8);
+  margin-bottom: 30px;
+}
+
+/* -------- TYPING TEXT -------- */
+.line {
+  font-size: 1.5rem;
+  margin: 12px 0;
+  opacity: 0;
+  font-weight: bold;
+}
+
+/* -------- BUTTON -------- */
+button {
+  margin-top: 40px;
+  padding: 15px 40px;
+  font-size: 20px;
+  border: none;
+  border-radius: 40px;
+  background: gold;
+  color: #ff2e7a;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 0 20px rgba(255,215,0,0.8);
+}
+
+button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(255,215,0,1);
+}
+
+/* -------- FIREWORKS -------- */
+.firework {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: brown;
+  border-radius: 50%;
+  animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(8); opacity: 0; }
+}
+
+/* -------- FLOATING EMOJIS -------- */
+.emoji {
+  position: absolute;
+  font-size: 24px;
+  animation: floatUp 5s linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(-120vh); opacity: 0; }
+}
+
+</style>
+</head>
+<body>
+
+<h1>Congratulations</h1>
+
+<div class="line" id="line1"></div>
+<div class="line" id="line2"></div>
+<div class="line" id="line3"></div>
+<div class="line" id="line4"></div>
+
+<button onclick="goDance()">Lets Dance</button>
+
+<script>
+
+/* -------- TYPING ANIMATION -------- */
+const lines = [
+  "You have won a one time mandatory Olol clean up",
+  "Please drop it off at my earliest convenience for your complimentary deep clean",
+  "I CANNOT WAIT!!!!!!!",
+  "THIS IS AN OFFER THAT CANNOT BE REFUSED..."
+];
+
+function typeLine(text, elementId, delay) {
+  setTimeout(() => {
+    const element = document.getElementById(elementId);
+    element.style.opacity = 1;
+    let i = 0;
+    const interval = setInterval(() => {
+      element.textContent += text.charAt(i);
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, 50);
+  }, delay);
+}
+
+typeLine(lines[0], "line1", 1000);
+typeLine(lines[1], "line2", 5000);
+typeLine(lines[2], "line3", 9000);
+typeLine(lines[3], "line4", 12000);
+
+/* -------- BROWN FIREWORKS -------- */
+function createFirework() {
+  const firework = document.createElement("div");
+  firework.classList.add("firework");
+  firework.style.left = Math.random() * window.innerWidth + "px";
+  firework.style.top = Math.random() * window.innerHeight + "px";
+  document.body.appendChild(firework);
+
+  setTimeout(() => firework.remove(), 1000);
+}
+
+setInterval(createFirework, 300);
+
+/* -------- FLOATING CELEBRATION EMOJIS -------- */
+const emojis = ["🎉","🥳","✨","💃","🔥","🎊"];
+
+setInterval(() => {
+  const emoji = document.createElement("div");
+  emoji.classList.add("emoji");
+  emoji.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+  emoji.style.left = Math.random() * window.innerWidth + "px";
+  emoji.style.top = window.innerHeight + "px";
+  document.body.appendChild(emoji);
+
+  setTimeout(() => emoji.remove(), 5000);
+}, 500);
+
+/* -------- BUTTON REDIRECT -------- */
+function goDance() {
+  window.location.href = "https://www.youtube.com/watch?v=O78Y6VnKeL8&list=RDO78Y6VnKeL8&start_radio=1";
+}
+
+</script>
+
+</body>
+</html>
