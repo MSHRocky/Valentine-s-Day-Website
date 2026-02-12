@@ -7,7 +7,7 @@
 
 <style>
 
-/* -------- PINK GRADIENT BACKGROUND -------- */
+/* -------- BACKGROUND -------- */
 body {
   margin: 0;
   height: 100vh;
@@ -21,63 +21,77 @@ body {
   text-align: center;
 }
 
-/* -------- CONGRATULATIONS -------- */
+/* -------- TITLE -------- */
 h1 {
-  font-size: 4rem;
+  font-size: 4.5rem;
   font-weight: bold;
   color: gold;
-  text-shadow: 0 0 20px rgba(255,215,0,0.8);
-  margin-bottom: 30px;
+  text-shadow: 0 0 30px rgba(255,215,0,1);
+  animation: glowPulse 1.5s infinite alternate;
 }
 
-/* -------- TYPING TEXT -------- */
+@keyframes glowPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+/* -------- TEXT -------- */
 .line {
-  font-size: 1.5rem;
-  margin: 12px 0;
+  font-size: 1.6rem;
+  margin: 14px 0;
   opacity: 0;
   font-weight: bold;
+  color: white;
+  text-shadow: 0 0 10px rgba(255,255,255,0.8);
 }
 
 /* -------- BUTTON -------- */
 button {
   margin-top: 40px;
-  padding: 15px 40px;
-  font-size: 20px;
+  padding: 16px 45px;
+  font-size: 22px;
   border: none;
-  border-radius: 40px;
+  border-radius: 50px;
   background: gold;
   color: #ff2e7a;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s ease;
-  box-shadow: 0 0 20px rgba(255,215,0,0.8);
+  box-shadow: 0 0 25px rgba(255,215,0,1);
 }
 
 button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 40px rgba(255,215,0,1);
+  transform: scale(1.15);
+  box-shadow: 0 0 50px rgba(255,215,0,1);
 }
 
-/* -------- FIREWORKS -------- */
-.firework {
+/* -------- FIREWORK PARTICLES -------- */
+.particle {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   background: brown;
   border-radius: 50%;
+  pointer-events: none;
   animation: explode 1s ease-out forwards;
 }
 
 @keyframes explode {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(8); opacity: 0; }
+  0% {
+    transform: translate(0,0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(0.5);
+    opacity: 0;
+  }
 }
 
 /* -------- FLOATING EMOJIS -------- */
 .emoji {
   position: absolute;
-  font-size: 24px;
-  animation: floatUp 5s linear infinite;
+  font-size: 28px;
+  animation: floatUp 4s linear infinite;
 }
 
 @keyframes floatUp {
@@ -90,7 +104,7 @@ button:hover {
 </head>
 <body>
 
-<h1>Congratulations</h1>
+<h1>CONGRATULATIONS 🎉</h1>
 
 <div class="line" id="line1"></div>
 <div class="line" id="line2"></div>
@@ -101,7 +115,7 @@ button:hover {
 
 <script>
 
-/* -------- TYPING ANIMATION -------- */
+/* -------- TYPING -------- */
 const lines = [
   "You have won a one time mandatory Olol clean up",
   "Please drop it off at my earliest convenience for your complimentary deep clean",
@@ -118,30 +132,46 @@ function typeLine(text, elementId, delay) {
       element.textContent += text.charAt(i);
       i++;
       if (i >= text.length) clearInterval(interval);
-    }, 50);
+    }, 40);
   }, delay);
 }
 
 typeLine(lines[0], "line1", 1000);
-typeLine(lines[1], "line2", 5000);
-typeLine(lines[2], "line3", 9000);
-typeLine(lines[3], "line4", 12000);
+typeLine(lines[1], "line2", 4500);
+typeLine(lines[2], "line3", 8500);
+typeLine(lines[3], "line4", 11000);
 
-/* -------- BROWN FIREWORKS -------- */
+/* -------- EXPLOSIVE BROWN FIREWORKS -------- */
 function createFirework() {
-  const firework = document.createElement("div");
-  firework.classList.add("firework");
-  firework.style.left = Math.random() * window.innerWidth + "px";
-  firework.style.top = Math.random() * window.innerHeight + "px";
-  document.body.appendChild(firework);
 
-  setTimeout(() => firework.remove(), 1000);
+  const centerX = Math.random() * window.innerWidth;
+  const centerY = Math.random() * window.innerHeight;
+
+  for (let i = 0; i < 25; i++) {
+    const particle = document.createElement("div");
+    particle.classList.add("particle");
+
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = 100 + Math.random() * 100;
+
+    const x = Math.cos(angle) * distance + "px";
+    const y = Math.sin(angle) * distance + "px";
+
+    particle.style.left = centerX + "px";
+    particle.style.top = centerY + "px";
+    particle.style.setProperty("--x", x);
+    particle.style.setProperty("--y", y);
+
+    document.body.appendChild(particle);
+
+    setTimeout(() => particle.remove(), 1000);
+  }
 }
 
-setInterval(createFirework, 300);
+setInterval(createFirework, 250);
 
-/* -------- FLOATING CELEBRATION EMOJIS -------- */
-const emojis = ["🎉","🥳","✨","💃","🔥","🎊"];
+/* -------- MORE EMOJIS -------- */
+const emojis = ["🎉","🥳","✨","💃","🔥","🎊","💖","🚀"];
 
 setInterval(() => {
   const emoji = document.createElement("div");
@@ -151,10 +181,10 @@ setInterval(() => {
   emoji.style.top = window.innerHeight + "px";
   document.body.appendChild(emoji);
 
-  setTimeout(() => emoji.remove(), 5000);
-}, 500);
+  setTimeout(() => emoji.remove(), 4000);
+}, 300);
 
-/* -------- BUTTON REDIRECT -------- */
+/* -------- BUTTON -------- */
 function goDance() {
   window.location.href = "https://www.youtube.com/watch?v=O78Y6VnKeL8&list=RDO78Y6VnKeL8&start_radio=1";
 }
