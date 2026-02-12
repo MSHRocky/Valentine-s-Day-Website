@@ -7,27 +7,29 @@
 
 <style>
 
+/* -------- DARK GLOOMY BACKGROUND -------- */
 body {
   margin: 0;
-  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  height: 100vh;
   overflow: hidden;
   font-family: 'Courier New', monospace;
-  color: white;
+  background: linear-gradient(to bottom, #0a1f44, #07162f, #020a18);
+  color: black;
+  position: relative;
 }
 
-/* -------- Rain -------- */
+/* -------- RAIN -------- */
 .rain {
   position: absolute;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 .drop {
   position: absolute;
   width: 2px;
   height: 25px;
-  background: rgba(180, 220, 255, 0.6);
+  background: rgba(120,160,220,0.6);
   animation: fall linear infinite;
 }
 
@@ -36,7 +38,7 @@ body {
   to { transform: translateY(100vh); }
 }
 
-/* -------- Thunder Flash -------- */
+/* -------- THUNDER FLASH -------- */
 .flash {
   position: absolute;
   width: 100%;
@@ -46,7 +48,7 @@ body {
   pointer-events: none;
 }
 
-/* -------- Text -------- */
+/* -------- TEXT -------- */
 .text-container {
   position: absolute;
   top: 25%;
@@ -61,36 +63,38 @@ body {
   margin: 15px 0;
 }
 
-/* -------- Stickman -------- */
+/* -------- STICKMAN -------- */
 .stickman {
   position: absolute;
-  top: 55%;
-  left: 45%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 60px;
-  height: 120px;
+  height: 140px;
   animation: walk 12s forwards;
 }
 
 @keyframes walk {
-  0% { top: 55%; left: 45%; }
-  100% { top: 85%; left: 5%; }
+  0% { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  100% { top: 88%; left: 6%; transform: translate(0,0); }
 }
 
 /* Head */
 .head {
   width: 40px;
   height: 40px;
-  border: 3px solid white;
+  border: 3px solid black;
   border-radius: 50%;
   margin: auto;
   position: relative;
+  background: transparent;
 }
 
-/* Sad Face */
+/* Eyes */
 .eye {
-  width: 4px;
-  height: 4px;
-  background: white;
+  width: 5px;
+  height: 5px;
+  background: black;
   border-radius: 50%;
   position: absolute;
   top: 12px;
@@ -99,11 +103,30 @@ body {
 .eye.left { left: 10px; }
 .eye.right { right: 10px; }
 
+/* Tear */
+.tear {
+  width: 3px;
+  height: 12px;
+  background: #4aa3ff;
+  position: absolute;
+  top: 18px;
+  left: 12px;
+  border-radius: 2px;
+  animation: tearFall 1.5s infinite;
+}
+
+@keyframes tearFall {
+  0% { height: 4px; opacity: 0.5; }
+  50% { height: 12px; opacity: 1; }
+  100% { height: 4px; opacity: 0.5; }
+}
+
+/* Sad Mouth */
 .mouth {
-  width: 18px;
-  height: 10px;
-  border-bottom: 3px solid white;
-  border-radius: 0 0 20px 20px;
+  width: 20px;
+  height: 12px;
+  border-top: 3px solid black;
+  border-radius: 20px 20px 0 0;
   position: absolute;
   bottom: 8px;
   left: 50%;
@@ -113,35 +136,35 @@ body {
 /* Body */
 .body {
   width: 3px;
-  height: 40px;
-  background: white;
+  height: 45px;
+  background: black;
   margin: auto;
 }
 
-/* Arms */
+/* Arms (drooping) */
 .arm {
   width: 30px;
   height: 3px;
-  background: white;
+  background: black;
   position: relative;
-  top: -30px;
+  top: -35px;
 }
 
 .arm.left {
-  transform: rotate(30deg);
-  left: -15px;
+  transform: rotate(50deg);
+  left: -18px;
 }
 
 .arm.right {
-  transform: rotate(-30deg);
-  left: 15px;
+  transform: rotate(-50deg);
+  left: 18px;
 }
 
 /* Legs */
 .leg {
   width: 3px;
   height: 40px;
-  background: white;
+  background: black;
   position: relative;
 }
 
@@ -155,7 +178,7 @@ body {
   left: 8px;
 }
 
-/* -------- Fade -------- */
+/* -------- FADE TO BLACK -------- */
 .fade-black {
   position: absolute;
   width: 100%;
@@ -185,6 +208,7 @@ body {
   <div class="head">
     <div class="eye left"></div>
     <div class="eye right"></div>
+    <div class="tear"></div>
     <div class="mouth"></div>
   </div>
   <div class="body"></div>
@@ -196,7 +220,7 @@ body {
 
 <script>
 
-/* -------- Heavy Rain -------- */
+/* -------- RAIN -------- */
 const rainContainer = document.getElementById("rain");
 for (let i = 0; i < 350; i++) {
   const drop = document.createElement("div");
@@ -207,10 +231,10 @@ for (let i = 0; i < 350; i++) {
   rainContainer.appendChild(drop);
 }
 
-/* -------- Random Thunder -------- */
+/* -------- RANDOM THUNDER -------- */
 function thunderFlash() {
   const flash = document.getElementById("flash");
-  flash.style.opacity = 0.8;
+  flash.style.opacity = 0.7;
   setTimeout(() => flash.style.opacity = 0, 150);
 }
 
@@ -218,7 +242,7 @@ setInterval(() => {
   if (Math.random() > 0.7) thunderFlash();
 }, 3000);
 
-/* -------- Typing -------- */
+/* -------- TYPING -------- */
 const lines = [
   "Damn, Suyani you really don't know your Valentine?",
   "I am so sad, my eyes are sweating.",
@@ -242,13 +266,15 @@ function typeLine(text, elementId, delay, callback=null) {
   }, delay);
 }
 
-/* -------- Final Lightning + Fade -------- */
-function finalLightningAndFade() {
+/* -------- FINAL LIGHTNING + FADE -------- */
+function finalSequence() {
 
+  // Dramatic lightning
   const flash = document.getElementById("flash");
   flash.style.opacity = 1;
   setTimeout(() => flash.style.opacity = 0, 300);
 
+  // Fade to black after stickman reaches corner
   setTimeout(() => {
     document.getElementById("fade").style.opacity = 1;
   }, 22000);
@@ -257,7 +283,7 @@ function finalLightningAndFade() {
 typeLine(lines[0], "line1", 1000);
 typeLine(lines[1], "line2", 5000);
 typeLine(lines[2], "line3", 9000);
-typeLine(lines[3], "line4", 13000, finalLightningAndFade);
+typeLine(lines[3], "line4", 13000, finalSequence);
 
 </script>
 
