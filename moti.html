@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calm Before The Storm</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Georgia', serif;
+    background: linear-gradient(to bottom, #87CEEB, #1e3c72);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    color: white;
+}
+
+/* Ocean waves */
+.wave {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 200px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 43%;
+    animation: waveMove 10s infinite linear;
+}
+
+.wave:nth-child(2) {
+    bottom: 10px;
+    opacity: 0.5;
+    animation-duration: 15s;
+}
+
+@keyframes waveMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+}
+
+.typing {
+    font-size: 1.5rem;
+    margin: 15px 0;
+    min-height: 30px;
+}
+
+.buttons {
+    margin-top: 40px;
+}
+
+button {
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.ready {
+    background: #ff9ecb;
+    color: white;
+}
+
+.ready:hover {
+    background: #ff6fae;
+    transform: scale(1.1);
+}
+
+.notready {
+    background: #ffffffaa;
+    color: #333;
+}
+
+.notready:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+/* Floating animals */
+.animal {
+    position: absolute;
+    font-size: 30px;
+    animation: floatAcross linear infinite;
+}
+
+@keyframes floatAcross {
+    0% {
+        transform: translateX(-10vw) translateY(0);
+    }
+    100% {
+        transform: translateX(110vw) translateY(-50px);
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div id="line1" class="typing"></div>
+    <div id="line2" class="typing"></div>
+    <div id="line3" class="typing"></div>
+    <div id="line4" class="typing"></div>
+    <div id="line5" class="typing"></div>
+    <div id="line6" class="typing"></div>
+
+    <div class="buttons">
+        <button class="ready" onclick="location.href='quizrules.html'">
+            I Think I'm Ready
+        </button>
+        <button class="notready" onclick="location.href='moti1.html'">
+            Not Yet, I Need Some Time
+        </button>
+    </div>
+</div>
+
+<div class="wave"></div>
+<div class="wave"></div>
+
+<script>
+// Typing animation
+const lines = [
+"Relax, buttons Kutty, you got this 🌊",
+"Just take a deep breath and breathe out...",
+"Imagine yourself sitting in the sun with the waves crashing against the shore",
+"Imagine being surrounded by nothing but birds chirping and murping all around you",
+"Imagine me right beside you squeezing your tiny hand telling you that I believe in you",
+"Believe in yourself Suya, you got this 💙"
+];
+
+function typeLine(text, elementId, speed, callback) {
+    let i = 0;
+    const el = document.getElementById(elementId);
+    function typing() {
+        if (i < text.length) {
+            el.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        } else if (callback) {
+            setTimeout(callback, 800);
+        }
+    }
+    typing();
+}
+
+function startTyping(index = 0) {
+    if (index < lines.length) {
+        typeLine(lines[index], "line" + (index + 1), 40, () => {
+            startTyping(index + 1);
+        });
+    }
+}
+
+startTyping();
+
+// Floating birds/ducks/chickens
+const animals = ["🐦","🕊️","🦆","🐔","🐤"];
+
+function createAnimal() {
+    const animal = document.createElement("div");
+    animal.classList.add("animal");
+    animal.innerHTML = animals[Math.floor(Math.random() * animals.length)];
+    animal.style.top = Math.random() * 80 + "vh";
+    animal.style.animationDuration = (10 + Math.random() * 10) + "s";
+    document.body.appendChild(animal);
+
+    setTimeout(() => {
+        animal.remove();
+    }, 20000);
+}
+
+setInterval(createAnimal, 2000);
+</script>
+
+</body>
+</html>
