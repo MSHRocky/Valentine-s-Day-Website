@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Something For You</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #ffd6e8, #ffc2dd, #ffe6f2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #8b004f;
+}
+
+/* Soft floating hearts */
+.heart {
+    position: absolute;
+    color: #ff6fae;
+    font-size: 20px;
+    opacity: 0.6;
+    animation: floatUp 12s linear infinite;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
+    }
+}
+
+.container {
+    max-width: 700px;
+    padding: 40px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    box-shadow: 0 0 40px rgba(255,105,180,0.3);
+}
+
+/* Typing text */
+.typing {
+    font-size: 1.6rem;
+    margin: 20px 0;
+    min-height: 40px;
+    text-shadow: 0 0 10px rgba(255,105,180,0.4);
+}
+
+/* Buttons */
+.buttons {
+    margin-top: 30px;
+}
+
+button {
+    padding: 15px 35px;
+    margin: 10px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+/* Card button */
+.card-btn {
+    background: #ff6fae;
+    color: white;
+}
+
+.card-btn:hover {
+    background: #ff4f9a;
+    transform: scale(1.08);
+}
+
+/* Ready button */
+.ready-btn {
+    background: white;
+    color: #8b004f;
+    border: 2px solid #ff6fae;
+}
+
+.ready-btn:hover {
+    background: #ffe6f2;
+    transform: scale(1.08);
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div id="line1" class="typing"></div>
+    <div id="line2" class="typing"></div>
+
+    <div class="buttons">
+        <button class="card-btn" onclick="window.open('https://www.greetingsisland.com/ecard/pnx4qvi4fqux','_blank')">
+            💌 View My Valentine’s Card
+        </button>
+
+        <br>
+
+        <button class="ready-btn" onclick="location.href='quizrules.html'">
+            I’m Ready Now 💗
+        </button>
+    </div>
+</div>
+
+<script>
+
+/* Slow Romantic Typing */
+const lines = [
+"I'm not the most creative like you, but I tried my best...",
+"Hope you like it Mi Amor 💕"
+];
+
+function typeLine(text, elementId, speed, callback) {
+    let i = 0;
+    const el = document.getElementById(elementId);
+    function typing() {
+        if (i < text.length) {
+            el.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        } else if (callback) {
+            setTimeout(callback, 1000);
+        }
+    }
+    typing();
+}
+
+function startTyping(index = 0) {
+    if (index < lines.length) {
+        typeLine(lines[index], "line" + (index + 1), 55, () => {
+            startTyping(index + 1);
+        });
+    }
+}
+
+startTyping();
+
+/* Floating hearts generator */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💗";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random() * 20) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 12000);
+}
+
+setInterval(createHeart, 800);
+
+</script>
+
+</body>
+</html>
