@@ -10,7 +10,7 @@
 /* ---------------- BODY ---------------- */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Trebuchet MS', sans-serif;
   background: linear-gradient(135deg, #ffb6c1, #ff4d6d);
   color: white;
   display: flex;
@@ -21,6 +21,23 @@ body {
   text-align: center;
 }
 
+/* ---------------- PROGRESS BAR ---------------- */
+#progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: rgba(255,255,255,0.2);
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: white;
+  transition: width 0.5s ease;
+}
+
 /* ---------------- QUIZ BOX ---------------- */
 #quiz-box {
   width: 90%;
@@ -29,13 +46,18 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 25px;
+  background: rgba(255,255,255,0.08);
+  padding: 40px;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  transition: opacity 0.4s ease;
 }
 
 /* ---------------- QUESTION ---------------- */
 #question {
   font-size: 2rem;
   min-height: 60px;
-  text-shadow: 0 0 12px white;
+  text-shadow: 0 0 15px white;
 }
 
 /* ---------------- OPTIONS (KAHOOT STYLE) ---------------- */
@@ -68,7 +90,7 @@ input[type="text"] {
   font-size: 18px;
   border-radius: 12px;
   border: none;
-  width: 65%;
+  width: 70%;
   text-align: center;
 }
 
@@ -111,25 +133,56 @@ input[type="text"] {
   animation: shake 0.4s;
 }
 
-/* ---------------- SPARKLES ---------------- */
-.sparkle {
+/* ---------------- FLOATING HEARTS ---------------- */
+.floating-heart {
   position: absolute;
-  font-size: 18px;
-  animation: float 4s linear infinite;
-  opacity: 0.8;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.7;
 }
 
-@keyframes float {
+@keyframes floatUp {
   0% { transform: translateY(0); opacity: 0; }
   50% { opacity: 1; }
-  100% { transform: translateY(-150px); opacity: 0; }
+  100% { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* ---------------- BEATING HEART ---------------- */
+.beat {
+  animation: beat 1s infinite;
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* ---------------- PARTICLE EXPLOSION ---------------- */
+.particle {
+  position: absolute;
+  font-size: 20px;
+  pointer-events: none;
+  animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+  from { transform: translate(0,0); opacity: 1; }
+  to {
+    transform: translate(var(--x), var(--y));
+    opacity: 0;
+  }
 }
 
 </style>
 </head>
 <body>
 
-<div id="lives">❤️❤️❤️</div>
+<div id="progress-container">
+  <div id="progress-bar"></div>
+</div>
+
+<div id="lives"></div>
 
 <div id="quiz-box">
   <div id="question"></div>
@@ -142,65 +195,24 @@ input[type="text"] {
 /* ---------------- QUIZ DATA ---------------- */
 
 const quiz = [
-
-  // Easy (Multiple Choice)
-  {
-    q: "What is my favorite anime?",
+  { q: "What is my favorite anime?",
     options: ["Naruto","One Piece","Attack On Titan","Dragon Ball"],
-    answer: ["Dragon Ball"],
+    answer: ["dragon ball"],
     type: "mc"
   },
-  {
-    q: "What is my greatest physical fear?",
-    options: ["Needles","Cucumbers","Shamini Aunty","Small Tight Places"],
-    answer: ["Needles"],
-    type: "mc"
-  },
-  {
-    q: "What is my favourite physical feature about you?",
-    options: ["Hips","Big Big BIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIG Bum Bum","Eyes","Feet"],
-    answer: ["Eyes"],
-    type: "mc"
-  },
-
-  // Medium (Text with multiple valid answers)
-  {
-    q: "Where was I born?",
-    answer: ["United Kingdom","UK", "uk", "Uk", "London", "Essex", "london", "England", "englad"],
+  { q: "Where was I born?",
+    answer: ["uk","united kingdom","london","essex","england"],
     type: "text"
   },
-  {
-    q: "What is my love language?",
-    answer: ["Physical Touch", "physical touch", "Physical", "physical", "Touch", "touch", "Touching", "touching", "Physically Touching", "physically touching", "Physically touching"],
-    type: "text"
-  },
-  {
-    q: "What is my favourite movie?",
-    answer: ["The Water Horse", "The water horse", "The Waterhorse", "The Waterhorse:Legend of the Deep", "The Water Horse:Legend of the Deep", "Our movies", "Our Movies", "Ghilli", "ghilli"],
-    type: "text"
-  },
-
-  // Hard (Text with multiple valid answers)
-  {
-    q: "What is my type?",
-    answer: ["Me", "Suyani", "suyani", "Suya", "suya", "Suyani Suthakaran", "Suyani suthakaran", "me"],
-    type: "text"
-  },
-  {
-    q: "Who is my favourite English film actor?",
-    answer: ["Adam Sandler", "adam sandler", "Adam sandler", "Adam", "adam", "sandler", "Sandler"],
-    type: "text"
-  },
-  {
-    q: "What are one of my dealbreakers in a relationship?",
-    answer: ["Disrespect", "disresepct", "Lack of communication", "Lack Of Communication", "Lack of Communication", "Disloyalty", "disloyalty", "Cheating", "cheating", "Lieing", "lieing", "Materialistic", "materialistic", "Materialism", "materialism", "Narrow Minded", "narrrow minded", "Narrow minded", "Narrow-minded"],
+  { q: "What is my type?",
+    answer: ["me","suyani","suya","suyani suthakaran"],
     type: "text"
   }
-
 ];
 
 let currentQuestion = 0;
 let lives = 3;
+let mistakes = 0;
 let heartsVisible = false;
 
 /* ---------------- SHOW QUESTION ---------------- */
@@ -216,8 +228,10 @@ function showQuestion() {
   optionsEl.innerHTML = "";
   questionEl.textContent = q.q;
 
-  if (q.type === "mc") {
+  document.getElementById("progress-bar").style.width =
+    (currentQuestion / quiz.length) * 100 + "%";
 
+  if (q.type === "mc") {
     q.options.forEach(option => {
       const btn = document.createElement("button");
       btn.textContent = option;
@@ -225,39 +239,32 @@ function showQuestion() {
       btn.onclick = () => checkAnswer(option);
       optionsEl.appendChild(btn);
     });
-
   } else {
-
     const input = document.createElement("input");
     input.type = "text";
     input.placeholder = "Type your answer...";
-
     const submitBtn = document.createElement("button");
     submitBtn.textContent = "Submit";
     submitBtn.className = "submit-btn";
-
     submitBtn.onclick = () => checkAnswer(input.value);
-
     optionsEl.appendChild(input);
     optionsEl.appendChild(submitBtn);
   }
 }
 
-/* ---------------- TYPING FEEDBACK ---------------- */
+/* ---------------- TYPING EFFECT ---------------- */
 
 function typeText(text) {
   const feedbackEl = document.getElementById("feedback");
   feedbackEl.innerHTML = "";
   let i = 0;
-
   function type() {
     if (i < text.length) {
       feedbackEl.innerHTML += text.charAt(i);
       i++;
-      setTimeout(type, 30);
+      setTimeout(type, 25);
     }
   }
-
   type();
 }
 
@@ -267,25 +274,36 @@ function checkAnswer(userAnswer) {
 
   const q = quiz[currentQuestion];
   const normalized = userAnswer.trim().toLowerCase();
-
-  const correct = q.answer.some(ans => ans === normalized);
+  const correct = q.answer.some(ans => ans.toLowerCase() === normalized);
 
   if (correct) {
 
-    currentQuestion++;
+    typeText("Correct my love 💖");
 
-    if (currentQuestion < quiz.length) {
-      showQuestion();
-    } else {
-      window.location.href = "bonus.html";
-    }
+    document.getElementById("quiz-box").style.boxShadow =
+      "0 0 40px white";
+
+    setTimeout(() => {
+      document.getElementById("quiz-box").style.boxShadow = "none";
+      currentQuestion++;
+
+      if (currentQuestion < quiz.length) {
+        document.getElementById("quiz-box").style.opacity = 0;
+        setTimeout(() => {
+          showQuestion();
+          document.getElementById("quiz-box").style.opacity = 1;
+        }, 400);
+      } else {
+        winGame();
+      }
+    }, 900);
 
   } else {
 
+    mistakes++;
     document.getElementById("quiz-box").classList.add("shake");
-    setTimeout(() => {
-      document.getElementById("quiz-box").classList.remove("shake");
-    }, 400);
+    setTimeout(() =>
+      document.getElementById("quiz-box").classList.remove("shake"), 400);
 
     if (!heartsVisible) {
       document.getElementById("lives").style.display = "block";
@@ -293,33 +311,65 @@ function checkAnswer(userAnswer) {
     }
 
     lives--;
-    document.getElementById("lives").textContent = "❤️".repeat(lives);
-
-    typeText("It's ok love, we all make mistakes sometimes. Even angels like you deserve another chance. Hearts left: " + lives);
+    document.getElementById("lives").innerHTML =
+      "❤️".repeat(lives);
 
     if (lives === 0) {
-      window.location.href = "fail.html";
+      typeText("Oh no baby… you’ve run out of hearts 💔");
+      setTimeout(() => window.location.href = "fail.html", 2000);
+      return;
     }
+
+    typeText("It's ok love, try again. Hearts left: " + lives);
   }
 }
 
-/* ---------------- SPARKLE EFFECT ---------------- */
+/* ---------------- WIN GAME ---------------- */
 
-const sparkles = ["✨", "💖", "💫"];
+function winGame() {
+
+  document.body.innerHTML =
+  `<div style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;">
+    <h1 style="font-size:3rem;text-shadow:0 0 25px white;">
+      ${mistakes === 0 ? "Perfect Score For A Perfect Girl! 👑💖" : "You Did Amazing My Love 💕"}
+    </h1>
+  </div>`;
+
+  romanticExplosion();
+
+  setTimeout(() => {
+    window.location.href = "pass.html";
+  }, 3500);
+}
+
+/* ---------------- PARTICLE EXPLOSION ---------------- */
+
+function romanticExplosion() {
+  for (let i = 0; i < 60; i++) {
+    const particle = document.createElement("div");
+    particle.className = "particle";
+    particle.innerText = ["💖","✨","💕"][Math.floor(Math.random()*3)];
+    particle.style.left = "50%";
+    particle.style.top = "50%";
+    particle.style.setProperty("--x", (Math.random()*600 - 300) + "px");
+    particle.style.setProperty("--y", (Math.random()*600 - 300) + "px");
+    document.body.appendChild(particle);
+    setTimeout(() => particle.remove(), 1200);
+  }
+}
+
+/* ---------------- FLOATING HEARTS LOOP ---------------- */
 
 setInterval(() => {
-  const sparkle = document.createElement("div");
-  sparkle.className = "sparkle";
-  sparkle.innerText = sparkles[Math.floor(Math.random() * sparkles.length)];
-  sparkle.style.left = Math.random() * window.innerWidth + "px";
-  sparkle.style.top = window.innerHeight + "px";
-  sparkle.style.fontSize = (15 + Math.random() * 15) + "px";
-  document.body.appendChild(sparkle);
+  const heart = document.createElement("div");
+  heart.className = "floating-heart beat";
+  heart.innerText = "❤️";
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 800);
 
-  setTimeout(() => sparkle.remove(), 4000);
-}, 300);
-
-/* ---------------- START QUIZ ---------------- */
+/* ---------------- START ---------------- */
 
 showQuestion();
 
